@@ -1,0 +1,45 @@
+using RotaryHeart.Lib.SerializableDictionary;
+using UnityEngine;
+
+namespace BossRushJam2024.Audio
+{
+    [System.Serializable]
+    public class SFXStringDictionary : SerializableDictionaryBase<string, SFXRack>
+    {
+        #region Public Methods
+
+        public virtual void InstantiateAll(Transform t)
+        {
+            foreach (var rack in this)
+            {
+                rack.Value.InstantiateEventInstance(t);
+            }
+        }
+
+        public virtual void Play(string audio)
+        {
+            if (TryGetValue(audio, out var rack))
+            {
+                rack.Instance.Play();
+            }
+        }
+
+        public virtual void Stop(string audio)
+        {
+            if (TryGetValue(audio, out var rack))
+            {
+                rack.Instance.Stop();
+            }
+        }
+
+        public virtual void StopAllInstances()
+        {
+            foreach (var rack in this)
+            {
+                rack.Value.Instance.Stop();
+            }
+        }
+
+        #endregion
+    }
+}

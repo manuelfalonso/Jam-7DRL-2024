@@ -6,6 +6,6 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/The 7DRL Challenge/Scenes/Main Gameplay.unity
+    path: Assets/JAM/Scenes/Main Gameplay.unity
     guid: 3c3adc0a62368c1409061f09d619ab93
   m_configObjects: {}
