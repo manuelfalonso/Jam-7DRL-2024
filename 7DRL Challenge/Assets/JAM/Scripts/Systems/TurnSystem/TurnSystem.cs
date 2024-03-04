@@ -2,14 +2,16 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Utils.Singleton;
 
 namespace JAM
 {
-    public class TurnSystem : MonoBehaviour
+    public class TurnSystem : MonoBehaviourSingleton<TurnSystem>
     {
         private bool playerTurn;
         private bool hasMoved;
         private bool hasAttacked;
+        // list<Enemigos> enemigos;
 
         public Action onMove;
         public Action onAttack;
@@ -24,6 +26,7 @@ namespace JAM
             onMove += OnPlayerMove;
             onAttack += OnPlayerAttack;
             onTurnEnd += OnPlayerTurnEnd;
+            // enemigos = new list<Enemigos>();
         }
 
         private void OnPlayerMove() 
@@ -46,6 +49,11 @@ namespace JAM
             playerTurn = true;
             hasMoved = false;
             hasAttacked = false;
+        }
+
+        public void AddEnemyToList() 
+        {
+            // enemigos.Add(enemigo);
         }
 
         public bool IsPlayerTurn() 
