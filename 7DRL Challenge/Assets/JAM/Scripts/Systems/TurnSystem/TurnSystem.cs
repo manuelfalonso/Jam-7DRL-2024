@@ -27,6 +27,7 @@ namespace JAM
             onAttack += OnPlayerAttack;
             onTurnEnd += OnPlayerTurnEnd;
             onTurnEnd += OnEnemiesTurn;
+            onTurnStart += OnPlayerTurnStart;
             // enemigos = new list<Enemigos>();
         }
 
@@ -42,11 +43,13 @@ namespace JAM
 
         private void OnPlayerTurnEnd() 
         {
+            Debug.Log("OnPlayerTurnEnd");
             playerTurn = false;
         }
 
         private void OnPlayerTurnStart() 
         {
+            Debug.Log("OnPlayerTurnStart");
             playerTurn = true;
             hasMoved = false;
             hasAttacked = false;
@@ -54,6 +57,7 @@ namespace JAM
 
         private void OnEnemiesTurn() 
         {
+            Debug.Log("OnEnemiesTurn");
             /* for (int i = 0; i < enemigos.Length; i++)
              * {
              *      enemigos[i].Execute();
