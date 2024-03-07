@@ -1,6 +1,8 @@
+using System;
 using System.Collections.Generic;
 using NaughtyAttributes;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.Tilemaps;
 using Utils.Singleton;
 using Random = UnityEngine.Random;
@@ -29,13 +31,17 @@ namespace JAM.TileMap
         
         [Tooltip("Horizontal tile size for the tileMap.")]
         private int _horizontalTileSize;
+        public int HorizontalTileSize => _horizontalTileSize;
         [Tooltip("Vertical tile size for the tileMap.")]
         private int _verticalTileSize;
+        public int VerticalTileSize => _verticalTileSize;
         [Tooltip("Flag to check if the tileMap is generated.")]
         private bool _isTileMapGenerated;
         [Tooltip("List of obstacle positions.")]
         private readonly List<Vector3Int> _obstaclePositions = new();
         #endregion
+
+        public Action OnTilesGenerated;
 
         #region MonoBehaviour Callbacks
         protected override void Awake()
@@ -64,7 +70,6 @@ namespace JAM.TileMap
                 }
             }
         }
-        #endregion
         #endregion
 
         #region Public Methods
@@ -97,6 +102,7 @@ namespace JAM.TileMap
             _isTileMapGenerated = true;
             // Generate obstacles
             GenerateObstacles();
+            OnTilesGenerated?.Invoke();
         }
         
         /// <summary>
@@ -203,6 +209,7 @@ namespace JAM.TileMap
             }
             return totalNearObstacles > 1;
         }
+        #endregion
         #endregion
     }
 }
