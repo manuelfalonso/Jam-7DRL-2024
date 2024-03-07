@@ -8,6 +8,7 @@ namespace JAM
 {
     public class TurnSystem : MonoBehaviourSingleton<TurnSystem>
     {
+        private int turnNumber;
         private bool playerTurn;
         private bool hasMoved;
         private bool hasAttacked;
@@ -18,8 +19,9 @@ namespace JAM
         public Action onTurnEnd;
         public Action onTurnStart;
 
-        private void Start()
+        private void Awake()
         {
+            turnNumber = 1;
             playerTurn = false;
             hasMoved = false;
             hasAttacked = false;
@@ -28,6 +30,7 @@ namespace JAM
             onTurnEnd += OnPlayerTurnEnd;
             onTurnEnd += OnEnemiesTurn;
             onTurnStart += OnPlayerTurnStart;
+            onTurnStart += SumTurn;
             // enemigos = new list<Enemigos>();
         }
 
@@ -66,6 +69,16 @@ namespace JAM
             onTurnStart?.Invoke();
         }
 
+        private void SumTurn() 
+        {
+            turnNumber++;
+        }
+
+        private void ResetTurns() 
+        {
+            turnNumber = 1;
+        }
+
         public void AddEnemyToList() 
         {
             // enemigos.Add(enemigo);
@@ -84,6 +97,11 @@ namespace JAM
         public bool HasPlayerAttacked() 
         {
             return hasAttacked;
+        }
+
+        public int GetTurnNumber() 
+        {
+            return turnNumber;
         }
     }
 }
