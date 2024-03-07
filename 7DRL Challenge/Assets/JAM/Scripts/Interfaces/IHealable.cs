@@ -1,4 +1,4 @@
-namespace BossRushJam2024.Interfaces
+namespace JAM.Interfaces
 {
     public interface IHealable
     {

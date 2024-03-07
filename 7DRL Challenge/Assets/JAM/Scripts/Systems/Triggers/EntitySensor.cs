@@ -1,8 +1,8 @@
-using BossRushJam2024.Entities;
+using JAM.Entities;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace BossRushJam2024
+namespace JAM
 {
     public enum Team {Player, Ally, Enemy}
 

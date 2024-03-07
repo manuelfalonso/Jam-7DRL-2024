@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Pampero.Stats
+namespace JAM.Stats
 {
     public static class StatFactory
     {
