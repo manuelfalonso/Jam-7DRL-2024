@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 1970612367655644258}
   - component: {fileID: 5191357423594155708}
   - component: {fileID: 922355967672813594}
+  - component: {fileID: 7135784069059533423}
   m_Layer: 0
   m_Name: Tilemap
   m_TagString: Untagged
@@ -160,7 +161,49 @@ MonoBehaviour:
   _minTileSize: 10
   _maxTileSize: 15
   _tileMap: {fileID: 1970612367655644258}
-  _tile: {fileID: 11400000, guid: bc32b06cd03b186408153755ada8570a, type: 2}
+  _tiles:
+  - {fileID: 11400000, guid: 2709498027f8ef14a9e499a184333fbb, type: 2}
+  - {fileID: 11400000, guid: 5604500a561619349a2cba27346532df, type: 2}
+  - {fileID: 11400000, guid: 0c398a8c943127b4dac82638299af9f1, type: 2}
+  _minObstacle: 3
+  _maxObstacle: 5
+  _obstacleTile: {fileID: 11400000, guid: dacefd616ed7fba4584362a4ad1a43df, type: 2}
+--- !u!19719996 &7135784069059533423
+TilemapCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6774632078053342991}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_MaximumTileChangeCount: 1000
+  m_ExtrusionFactor: 0
+  m_UseDelaunayMesh: 0
 --- !u!1 &7112064447846344992
 GameObject:
   m_ObjectHideFlags: 0
@@ -203,6 +246,6 @@ Grid:
   m_GameObject: {fileID: 7112064447846344992}
   m_Enabled: 1
   m_CellSize: {x: 1, y: 0.5, z: 1}
-  m_CellGap: {x: 0, y: 0, z: 0}
-  m_CellLayout: 3
+  m_CellGap: {x: -0.36, y: 0.14, z: 0}
+  m_CellLayout: 0
   m_CellSwizzle: 0
