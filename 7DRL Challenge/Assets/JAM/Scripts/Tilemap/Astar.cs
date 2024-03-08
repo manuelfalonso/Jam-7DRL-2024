@@ -1,4 +1,5 @@
-﻿using System;
+﻿using JAM.TileMap;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -44,6 +45,10 @@ public class Astar
         {
             for (int j = 0; j < rows; j++)
             {
+                if(TileMapManager.Instance.IsObstacle(new Vector3Int(i, j, 0)))
+                {
+                    continue;
+                }
                 Spots[i, j].AddNeighboors(Spots, i, j);
                 if (Spots[i, j].X == start.x && Spots[i, j].Y == start.y)
                     Start = Spots[i, j];
