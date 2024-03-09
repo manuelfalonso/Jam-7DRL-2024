@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using NaughtyAttributes;
 using UnityEngine;
-using UnityEngine.Events;
 using UnityEngine.Tilemaps;
 using Utils.Singleton;
 using Random = UnityEngine.Random;
@@ -55,21 +54,20 @@ namespace JAM.TileMap
         #region TEMPORAL
         private void Update()
         {
+            
             if (Input.GetMouseButtonDown(0))
             {
                 var hit = Physics2D.GetRayIntersection(Camera.main.ScreenPointToRay(Input.mousePosition));
                 if (hit.collider != null)
                 {
                     var tilePosition = _tileMap.WorldToCell(hit.point);
-                    if (tilePosition.x < 0 || tilePosition.x >= _horizontalTileSize || tilePosition.y < 0 || tilePosition.y >= _verticalTileSize)
-                    {
-                        return;
-                    }
+                    if (!IsInsideBounds(tilePosition)) { return; }
                     
                     IsObstacle(tilePosition);
                 }
             }
         }
+        #endregion
         #endregion
 
         #region Public Methods
@@ -134,6 +132,25 @@ namespace JAM.TileMap
         public bool IsObstacle(Vector3Int position)
         {
             return _obstaclePositions.Contains(position);
+        }
+
+        public bool IsInsideBounds(Vector3Int tilePosition)
+        {
+            return tilePosition.x > 0 && 
+                   tilePosition.x <= _horizontalTileSize && 
+                   tilePosition.y > 0 &&
+                   tilePosition.y <= _verticalTileSize;
+
+        }
+        
+        public Vector3Int GetTilePosition(Vector3 worldPosition)
+        {
+            return _tileMap.WorldToCell(worldPosition);
+        }
+        
+        public Vector3 GetWorldPosition(Vector3Int tilePosition)
+        {
+            return _tileMap.GetCellCenterWorld(tilePosition);
         }
         #endregion
         
@@ -209,7 +226,6 @@ namespace JAM.TileMap
             }
             return totalNearObstacles > 1;
         }
-        #endregion
         #endregion
     }
 }

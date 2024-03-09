@@ -1,92 +1,79 @@
-﻿using JAM.TileMap;
+﻿using System;
 using System.Collections;
+using JAM.TileMap;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using Utils.Singleton;
 
-public class GridManager : MonoBehaviour
+public class AStarManager : MonoBehaviourSingleton<AStarManager>
 {
-    public Tilemap tilemap;
-    public Tilemap roadMap;
-    public TileBase roadTile;
-    public Vector3Int[,] spots;
-    // aca sera el enemigo
-    public Vector2Int start;
-    Astar astar;
-    List<Spot> roadPath = new List<Spot>();
-    new Camera camera;
-    BoundsInt bounds;
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField] private Tilemap _tileMap;
+    private Vector3Int[,] _spots;
+    private Astar _aStar;
+    private BoundsInt _bounds;
+    
+    
+    public List<Spot> CreatePath(Vector3Int myPos, Vector3Int finalPos)
     {
-        TileMapManager.Instance.OnTilesGenerated -= RecalculateBoundries;
-        TileMapManager.Instance.OnTilesGenerated += RecalculateBoundries;
-
-        tilemap.CompressBounds();
-        roadMap.CompressBounds();
-        bounds = tilemap.cellBounds;
-        camera = Camera.main;
-
-        CreateGrid();
-        astar = new Astar(spots, bounds.size.x, bounds.size.y);
-    }
-    private void OnDisable()
-    {
-        TileMapManager.Instance.OnTilesGenerated -= RecalculateBoundries;
-    }
-    public void CreateGrid()
-    {
-        spots = new Vector3Int[bounds.size.x, bounds.size.y];
-        for (int x = bounds.xMin, i = 0; i < (bounds.size.x); x++, i++)
+        var initialPos = new Vector2Int(myPos.x, myPos.y);
+        var endPos = new Vector2Int(finalPos.x, finalPos.y);
+        var path = _aStar.CreatePath(_spots, initialPos, endPos, 1000);
+        
+        if(path is null || path.Count <= 0)
         {
-            for (int y = bounds.yMin, j = 0; j < (bounds.size.y); y++, j++)
+            throw new Exception("Path not found!");
+        }
+        
+        return path;
+    }
+    
+    private void CreateGrid()
+    {
+        _spots = new Vector3Int[_bounds.size.x, _bounds.size.y];
+        for (int x = _bounds.xMin, i = 0; i < (_bounds.size.x); x++, i++)
+        {
+            for (int y = _bounds.yMin, j = 0; j < (_bounds.size.y); y++, j++)
             {
-                if (tilemap.HasTile(new Vector3Int(x, y, 0)))
+                if (_tileMap.HasTile(new Vector3Int(x, y, 0)))
                 {
-                    spots[i, j] = new Vector3Int(x, y, 0);
+                    _spots[i, j] = new Vector3Int(x, y, 0);
                 }
                 else
                 {
-                    spots[i, j] = new Vector3Int(x, y, 1);
+                    _spots[i, j] = new Vector3Int(x, y, 1);
                 }
             }
         }
     }
-
-    private void RecalculateBoundries()
+    
+    private void Start()
     {
-        CleanTilemap(roadMap);
+        TileMapManager.Instance.OnTilesGenerated -= RecalculateBounds;
+        TileMapManager.Instance.OnTilesGenerated += RecalculateBounds;
+    }
+    private void OnDisable()
+    {
+        TileMapManager.Instance.OnTilesGenerated -= RecalculateBounds;
+    }
 
-        tilemap.CompressBounds();
-        roadMap.CompressBounds();
-        bounds = tilemap.cellBounds;
-        camera = Camera.main;
+    private void OnEnable()
+    {
+        TileMapManager.Instance.OnTilesGenerated -= RecalculateBounds;
+        TileMapManager.Instance.OnTilesGenerated += RecalculateBounds;
+    }
+    
+    private void RecalculateBounds()
+    {
+        //_tileMap.CompressBounds(); 
+        _bounds = _tileMap.cellBounds;
 
         CreateGrid();
-        astar = new Astar(spots, bounds.size.x, bounds.size.y);
+        _aStar = new Astar(_spots, _bounds.size.x, _bounds.size.y);
     }
 
-    private void CleanTilemap(Tilemap tilemap)
-    {
-        BoundsInt bounds = tilemap.cellBounds;
-        foreach (var position in bounds.allPositionsWithin)
-        {
-            // Remove the tile at the current position
-            tilemap.SetTile(position, null);
-        }
-    }
-
-    private void DrawRoad()
-    {
-        for (int i = 0; i < roadPath.Count; i++)
-        {
-            roadMap.SetTile(new Vector3Int(roadPath[i].X, roadPath[i].Y, 0), roadTile);
-        }
-    }
-
-    
-    void Update()
+    #region EXAMPLE
+    /*void Update()
     {
 
         if (Input.GetMouseButton(1))
@@ -138,15 +125,17 @@ public class GridManager : MonoBehaviour
             Vector3 world = camera.ScreenToWorldPoint(Input.mousePosition);
             Vector3Int gridPos = tilemap.WorldToCell(world);
 
-            if (roadPath != null && roadPath.Count > 0)
+            if (roadPath is not null && roadPath.Count > 0)
                 roadPath.Clear();
 
             roadPath = astar.CreatePath(spots, start, new Vector2Int(tilePosition.x, tilePosition.y), 1000);
-            if (roadPath == null)
+            if (roadPath is null)
                 return;
 
-            DrawRoad();
             start = new Vector2Int(tilePosition.x, tilePosition.y);
         }
-    }
+
+    }*/
+    #endregion
+    
 }
