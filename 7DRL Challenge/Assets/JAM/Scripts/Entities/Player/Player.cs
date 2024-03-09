@@ -7,6 +7,15 @@ namespace JAM.Entities.Player
     {
         [SerializeField] private Vector3Int _initialPosition;
 
+        private PlayerInputs _inputActions;
+
+
+        override protected void Awake()
+        {
+            base.Awake();
+
+            _inputActions = new PlayerInputs();
+        }
 
         private void Start()
         {
