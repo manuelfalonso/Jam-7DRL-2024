@@ -136,11 +136,10 @@ namespace JAM.TileMap
 
         public bool IsInsideBounds(Vector3Int tilePosition)
         {
-            return tilePosition.x > 0 && 
-                   tilePosition.x <= _horizontalTileSize && 
-                   tilePosition.y > 0 &&
-                   tilePosition.y <= _verticalTileSize;
-
+            return tilePosition.x >= 0 && 
+                   tilePosition.x < _horizontalTileSize && 
+                   tilePosition.y >= 0 &&
+                   tilePosition.y < _verticalTileSize;
         }
         
         public Vector3Int GetTilePosition(Vector3 worldPosition)

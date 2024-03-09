@@ -22,15 +22,19 @@ namespace JAM
                 if (hit.collider != null)
                 {
                     var tilePosition = TileMapManager.Instance.GetTilePosition(hit.point);
-                    if (!TileMapManager.Instance.IsInsideBounds(tilePosition))
-                    {
-                        return;
-                    }
+                    
+                    if (!TileMapManager.Instance.IsInsideBounds(tilePosition) ||
+                        TileMapManager.Instance.IsObstacle(tilePosition)) { return; }
 
                     var path = AStarManager.Instance.CreatePath(_myPosition, tilePosition);
-
-                    var pathSelected = path[path.Count - 1];
-                    transform.position = new Vector3(pathSelected.X, pathSelected.Y, 0);
+                    
+                    if(path == null) { return; }
+                    
+                    var pathSelected = path[0];
+                    _myPosition = new Vector3Int(pathSelected.X, pathSelected.Y, 0);
+                    var pos = TileMapManager.Instance.GetWorldPosition(
+                        new Vector3Int(pathSelected.X, pathSelected.Y, 0));
+                    transform.position = pos;
                 }
             }
         }

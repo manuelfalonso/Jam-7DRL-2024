@@ -22,7 +22,7 @@ public class AStarManager : MonoBehaviourSingleton<AStarManager>
         
         if(path is null || path.Count <= 0)
         {
-            throw new Exception("Path not found!");
+            return null;
         }
         
         return path;
@@ -65,14 +65,32 @@ public class AStarManager : MonoBehaviourSingleton<AStarManager>
     
     private void RecalculateBounds()
     {
-        //_tileMap.CompressBounds(); 
+        GenerateTiles();
+        _tileMap.CompressBounds(); 
         _bounds = _tileMap.cellBounds;
-
+        
         CreateGrid();
         _aStar = new Astar(_spots, _bounds.size.x, _bounds.size.y);
     }
 
+    private void GenerateTiles()
+    {
+        for (var x = 0; x < TileMapManager.Instance.HorizontalTileSize; x++)
+        {
+            for (var y = 0; y < TileMapManager.Instance.VerticalTileSize; y++)
+            {
+                var pos = new Vector3Int(x,y,0);
+                if (TileMapManager.Instance.IsObstacle(pos)) { continue; }
+                
+                _tileMap.SetTile(pos, _invisibleTile);
+            }
+        }
+    }
+
+    [SerializeField] private Tile _invisibleTile;
+
     #region EXAMPLE
+
     /*void Update()
     {
 
@@ -136,6 +154,7 @@ public class AStarManager : MonoBehaviourSingleton<AStarManager>
         }
 
     }*/
+
     #endregion
-    
+
 }
