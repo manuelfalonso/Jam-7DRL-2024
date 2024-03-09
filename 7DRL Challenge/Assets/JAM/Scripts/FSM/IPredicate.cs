@@ -1,4 +1,4 @@
-﻿namespace BossRushJam2024.FSM
+﻿namespace JAM.FSM
 {
     public interface IPredicate
     {

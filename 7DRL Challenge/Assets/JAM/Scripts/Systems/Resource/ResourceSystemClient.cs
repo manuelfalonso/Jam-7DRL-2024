@@ -1,142 +1,112 @@
-using BossRushJam2024.Entities;
 using NaughtyAttributes;
+using System;
 using UnityEngine;
 
-namespace BossRushJam2024.Shared.Systems.Resource
+namespace JAM.Shared.Systems.Resource
 {
     /// <summary>
     /// Example client script testing a Player Health
     /// </summary>
     public class ResourceSystemClient : MonoBehaviour
     {
-        /// <summary>
-        /// Amount to increase or decrease the health system by
-        /// </summary>
-        [Tooltip("Amount to increase or decrease the health system by")]
-        [SerializeField] private float _increaseDecreaseAmount = 1f;
+        [SerializeField] private ResourceSystemView _resourceSystemView;
 
-        private IResourceSystem _entityHealthSystem = null;
+        private IResourceSystem _entityHealthSystem;
+
+        public event Action<float> EmptyHealth;
 
 
         private void Start()
         {
-            if (TryGetComponent(out Entity entity))
-            {
-                _entityHealthSystem = entity.HealthSystem;
-            }
+            TryGetComponent(out _entityHealthSystem);
+            _entityHealthSystem.AmountEmptied.AddListener(x => EmptyHealth?.Invoke(x));
+            InitializeResourceSystemView();
         }
 
 
-        internal void HealPlayer()
+        private void InitializeResourceSystemView()
+        {
+            _resourceSystemView.MinLife = 0f;
+            _resourceSystemView.MaxLife = _entityHealthSystem.MaxAmount;
+            _resourceSystemView.UpdateHealthBar(_entityHealthSystem.Amount);
+            _entityHealthSystem.AmountChanged.AddListener(_resourceSystemView.UpdateHealthBar);
+        }
+
+        internal void HealPlayer(HealData data)
         {
             // The player only heals by a fixed amount
-            _entityHealthSystem.IncreaseAmount(_increaseDecreaseAmount);
+            _entityHealthSystem.IncreaseAmount(data.Amount);
         }
 
-        internal void TakeDamagePlayer()
+        internal void TakeDamagePlayer(DamageData data)
         {
             // The player only get hurt by a fixed amount
-            _entityHealthSystem.DecreaseAmount(_increaseDecreaseAmount);
+            _entityHealthSystem.DecreaseAmount(data.Amount);
+        }
+
+        internal void RestorePlayer()
+        {
+            // Restore Player health to the initial amount
+            _entityHealthSystem.ResetAmount();
         }
 
 
         #region Debug
         [Button]
         /// <summary>
-        /// Debug method
+        /// Debug method to heal the player
         /// </summary>
         public void Heal()
         {
-            HealPlayer();
+            var data = new HealData
+            {
+                Amount = 1f
+            };
+            HealPlayer(data);
         }
 
         [Button]
         /// <summary>
-        /// Debug method
+        /// Debug method to damage the player
         /// </summary>
         public void TakeDamage()
         {
-            TakeDamagePlayer();
+            var data = new DamageData
+            {
+                Amount = 1f
+            };
+            TakeDamagePlayer(data);
+        }
+
+        [Button]
+        /// <summary>
+        /// Debug method to restore player health
+        /// </summary>
+        public void Revive()
+        {
+            RestorePlayer();
         }
         #endregion
 
 
+        #region OnGUI
+        private void OnGUI()
+        {
+            if (GUI.Button(new Rect(10, 10, 150, 100), "Heal Player"))
+            {
+                Heal();
+            }
 
+            if (GUI.Button(new Rect(10, 120, 150, 100), "Damage Player"))
+            {
+                TakeDamage();
+            }
 
-
-
-
-        //IEnumerator Start()
-        //{
-        //    // Life Resource example
-        //    _playerHealthSystem.AmountEmptied.AddListener(PlayerHealthSystem_OnEmptyResource);
-        //    _playerHealthSystem.AmountChanged.AddListener(PlayerHealthSystem_OnResourceChanged);
-        //    _playerHealthSystem.AmountRestored.AddListener(PlayerHealthSystem_OnRestoreResource);
-        //    _playerHealthSystem.AmountMaxed.AddListener(PlayerHealthSystem_OnMaxResource);
-        //    _playerHealthSystem.AmountLow.AddListener(PlayerHealthSystem_OnLowResource);
-
-        //    // Get data
-        //    Log($"* Player Initial life: {_playerHealthSystem.Amount}", this);
-        //    Log($"* Player Max life: {_playerHealthSystem.MaxAmount}", this);
-        //    Log($"* Player has {_playerHealthSystem.ResourcePercent * 100f}% of life", this);
-
-        //    // Methods
-        //    Log($"* Damage Player", this);
-        //    _playerHealthSystem.DecreaseAmountWithResult(80f);
-        //    Log($"* Heal Player to max Health", this);
-        //    _playerHealthSystem.IncreaseAmountWithResult(9999f);
-        //    Log($"* Tree fall and killed the Player", this);
-        //    _playerHealthSystem.ClearAmountWithResult();
-        //    Log($"* Revive Player by half of this life", this);
-        //    _playerHealthSystem.RestoreAmountWithResult(0.5f);
-        //    Log($"* Player health now is immutable", this);
-        //    _playerHealthSystem.Immutable = true;
-        //    Log($"* Tring to damage the Player", this);
-        //    _playerHealthSystem.DecreaseAmountWithResult(10f);
-        //    Log($"* Player health now is not immutable", this);
-        //    _playerHealthSystem.Immutable = false;
-        //    Log($"* Killed the Player, AGAIN!", this);
-        //    _playerHealthSystem.ClearAmountWithResult();
-        //    Log($"* But now reset it to initial amount", this);
-        //    _playerHealthSystem.ResetAmountWithResult();
-
-        //    yield break;
-        //}
-
-
-        //private void PlayerHealthSystem_OnLowResource(float healthAmount)
-        //{
-        //    Log($"Player OnLowResource", this);
-        //}
-
-        //private void PlayerHealthSystem_OnMaxResource(float healthAmount)
-        //{
-        //    Log($"Player OnMaxResource", this);
-        //}
-
-        //private void PlayerHealthSystem_OnRestoreResource(float healthAmount)
-        //{
-        //    Log($"Player OnRestoreResource", this);
-        //}
-
-        //private void PlayerHealthSystem_OnResourceChanged(float healthAmount)
-        //{
-        //    Log($"Player OnResourceChanged: {_playerHealthSystem.Amount}", this);
-        //}
-
-        //private void PlayerHealthSystem_OnEmptyResource(float healthAmount)
-        //{
-        //    Log($"Player OnEmptyResource", this);
-        //}
-
-
-        //public void Log(object message, Object sender = null)
-        //{
-        //    if (sender != null)
-        //        Debug.Log($"{this} => {message}", sender);
-        //    else
-        //        Debug.Log($"{this} => {message}");
-        //}
-
+            if (GUI.Button(new Rect(10, 230, 150, 100), "Revive Player"))
+            {
+                Revive();
+            }
+        }
+        #endregion
     }
 }

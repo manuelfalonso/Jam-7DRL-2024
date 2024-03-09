@@ -1,6 +1,6 @@
 using System;
 
-namespace BossRushJam2024.Shared.Systems.Resource
+namespace JAM.Shared.Systems.Resource
 {
     /// <summary>
     /// Serializable class representing a resource with an amount, maximum amount, and initial amount.

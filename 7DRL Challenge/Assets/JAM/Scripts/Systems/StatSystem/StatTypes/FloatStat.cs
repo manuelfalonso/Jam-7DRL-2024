@@ -2,7 +2,7 @@ using System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Pampero.Stats
+namespace JAM.Stats
 {
     [System.Serializable]
     public class FloatStat : Stat<float, FloatStatModifier>, IAdditiveStat<float>

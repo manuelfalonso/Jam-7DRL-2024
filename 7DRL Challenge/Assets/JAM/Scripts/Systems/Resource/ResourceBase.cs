@@ -1,4 +1,4 @@
-namespace BossRushJam2024.Shared.Systems.Resource
+namespace JAM.Shared.Systems.Resource
 {
     /// <summary>
     /// Base class for all resources.

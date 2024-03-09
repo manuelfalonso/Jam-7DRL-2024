@@ -214,7 +214,6 @@ GameObject:
   m_Component:
   - component: {fileID: 3349664471660173388}
   - component: {fileID: 955583608251603803}
-  - component: {fileID: 4495613877693180761}
   m_Layer: 0
   m_Name: Grid
   m_TagString: Untagged
@@ -251,22 +250,6 @@ Grid:
   m_CellGap: {x: 0, y: 0, z: 0}
   m_CellLayout: 0
   m_CellSwizzle: 0
---- !u!114 &4495613877693180761
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7112064447846344992}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9dcd27e578305df4d8824dc230614da5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  tilemap: {fileID: 1970612367655644258}
-  roadMap: {fileID: 1601368616557496931}
-  roadTile: {fileID: 11400000, guid: 580eacd0406ab4e4dafdf7940f67ad4b, type: 2}
-  start: {x: 0, y: 0}
 --- !u!1 &9089019077890344388
 GameObject:
   m_ObjectHideFlags: 0
@@ -278,6 +261,7 @@ GameObject:
   - component: {fileID: 2614000521740370537}
   - component: {fileID: 1601368616557496931}
   - component: {fileID: 3050754184859581933}
+  - component: {fileID: 7440376128738260881}
   m_Layer: 0
   m_Name: Roadmap
   m_TagString: Untagged
@@ -411,3 +395,16 @@ TilemapRenderer:
   m_Mode: 0
   m_DetectChunkCullingBounds: 0
   m_MaskInteraction: 0
+--- !u!114 &7440376128738260881
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9089019077890344388}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9dcd27e578305df4d8824dc230614da5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _tileMap: {fileID: 1601368616557496931}
