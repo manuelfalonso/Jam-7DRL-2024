@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace BossRushJam2024.FSM
+namespace JAM.FSM
 {
     public partial class StateMachine : MonoBehaviour
     {

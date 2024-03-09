@@ -1,4 +1,4 @@
-namespace BossRushJam2024.Audio
+namespace JAM.Audio
 {
     [System.Serializable]
     public class SFXInterruptableDictionary : SFXStringDictionary

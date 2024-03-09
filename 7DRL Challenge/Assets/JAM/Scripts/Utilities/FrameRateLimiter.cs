@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace BossRushJam2024.Utilities
+namespace JAM.Utilities
 {
     /// <summary>
     /// Limit FPS to optimize performance to the maximum refresh rate of the monitor

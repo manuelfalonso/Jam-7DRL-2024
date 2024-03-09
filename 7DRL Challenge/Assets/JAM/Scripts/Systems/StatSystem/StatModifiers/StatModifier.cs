@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Pampero.Stats
+namespace JAM.Stats
 {
     [System.Serializable]
     public abstract class StatModifier<T>

@@ -1,6 +1,6 @@
 ﻿using UnityEngine.Events;
 
-namespace BossRushJam2024.Shared.Systems.Resource
+namespace JAM.Shared.Systems.Resource
 {
     public interface IResourceSystem
     {

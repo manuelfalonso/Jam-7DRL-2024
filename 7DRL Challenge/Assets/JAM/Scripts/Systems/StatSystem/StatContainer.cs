@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Pampero.Stats
+namespace JAM.Stats
 {
     [System.Serializable]
     public class StatContainer

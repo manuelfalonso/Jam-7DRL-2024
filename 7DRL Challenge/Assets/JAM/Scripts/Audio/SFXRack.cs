@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace BossRushJam2024.Audio
+namespace JAM.Audio
 {
     [Serializable]
     public class SFXRack

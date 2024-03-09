@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace BossRushJam2024.Audio
+namespace JAM.Audio
 {
     [Serializable]
     [CreateAssetMenu(fileName = "New SFX Scriptable Data", menuName = "BossRushJam2024/Audio/SFX Scriptable Data")]

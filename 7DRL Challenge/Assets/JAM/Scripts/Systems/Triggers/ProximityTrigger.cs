@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace BossRushJam2024
+namespace JAM
 {
     /// <summary>
     /// Use a collider attached to the object to trigger events in one layer.

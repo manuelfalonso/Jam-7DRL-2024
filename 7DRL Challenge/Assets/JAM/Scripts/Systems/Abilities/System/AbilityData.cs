@@ -1,4 +1,4 @@
-namespace BossRushJam2024.Systems.Abilities
+namespace JAM.Systems.Abilities
 {
     public class AbilityData
     {

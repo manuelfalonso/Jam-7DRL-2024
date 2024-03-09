@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace Pampero.Stats
+namespace JAM.Stats
 {
     [System.Serializable]
     public class BoolStat : Stat<bool, BoolStatModifier>

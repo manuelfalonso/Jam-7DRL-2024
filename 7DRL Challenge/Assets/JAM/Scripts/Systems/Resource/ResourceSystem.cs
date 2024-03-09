@@ -3,7 +3,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace BossRushJam2024.Shared.Systems.Resource
+namespace JAM.Shared.Systems.Resource
 {
     /// <summary>
     /// Supports:

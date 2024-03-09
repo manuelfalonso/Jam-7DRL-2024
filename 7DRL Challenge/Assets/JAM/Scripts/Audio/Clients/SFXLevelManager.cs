@@ -2,7 +2,7 @@ using NaughtyAttributes;
 using UnityEngine;
 using Utils.Singleton;
 
-namespace BossRushJam2024.Audio
+namespace JAM.Audio
 {
     public class SFXLevelManager : MonoBehaviourSingleton<SFXLevelManager>
     {

@@ -27,23 +27,26 @@ namespace JAM.TileMap
         [SerializeField] private int _maxObstacle = 5;
         [Tooltip("Tile to generate as an obstacle.")]
         [SerializeField] private Tile _obstacleTile;
-        
+
         [Tooltip("Horizontal tile size for the tileMap.")]
         private int _horizontalTileSize;
-        public int HorizontalTileSize => _horizontalTileSize;
         [Tooltip("Vertical tile size for the tileMap.")]
         private int _verticalTileSize;
-        public int VerticalTileSize => _verticalTileSize;
         [Tooltip("Flag to check if the tileMap is generated.")]
         private bool _isTileMapGenerated;
         [Tooltip("List of obstacle positions.")]
         private readonly List<Vector3Int> _obstaclePositions = new();
         #endregion
 
+        #region Properties
+        public int HorizontalTileSize => _horizontalTileSize;
+        public int VerticalTileSize => _verticalTileSize;
+        #endregion
+        
         #region Events
         public Action OnTilesGenerated;
         #endregion
-
+        
         #region MonoBehaviour Callbacks
         protected override void Awake()
         {
@@ -71,7 +74,7 @@ namespace JAM.TileMap
         }
         #endregion
         #endregion
-
+        
         #region Public Methods
         /// <summary>
         /// Generate random tileMap with random tiles.
@@ -228,5 +231,60 @@ namespace JAM.TileMap
             return totalNearObstacles > 1;
         }
         #endregion
+
+
+        #region Helpers
+        public TileSelectionData Selection(out bool success)
+        {
+            var data = new TileSelectionData();
+
+            var hit = Physics2D.GetRayIntersection(Camera.main.ScreenPointToRay(Input.mousePosition));
+            if (hit.collider != null)
+            {
+                var tilePosition = _tileMap.WorldToCell(hit.point);
+
+                data.TilePosition = tilePosition;
+                data.Tile = _tileMap.GetTile<Tile>(tilePosition);
+                data.IsObstacle = IsObstacle(tilePosition);
+
+                if (tilePosition.x < 0 || tilePosition.x >= _horizontalTileSize || tilePosition.y < 0 || tilePosition.y >= _verticalTileSize)
+                {
+                    success = false;
+                    return data;
+                }
+
+                success = true;
+            }
+            else
+            {
+                success = false;
+            }
+
+            return data;
+        }
+
+        public bool IsInBounds(Vector3Int position)
+        {
+            return position.x >= 0 && position.x < _horizontalTileSize && position.y >= 0 && position.y < _verticalTileSize;
+        }
+
+        public Tile GetTile(Vector3Int position)
+        {
+            return _tileMap.GetTile<Tile>(position);
+        }
+
+        public Vector3 GetCellCenter(Vector3Int position)
+        {
+            return _tileMap.GetCellCenterWorld(position);
+        }
+        #endregion
+
+
+        public struct TileSelectionData
+        {
+            public Vector3Int TilePosition;
+            public Tile Tile;
+            public bool IsObstacle;
+        }
     }
 }
