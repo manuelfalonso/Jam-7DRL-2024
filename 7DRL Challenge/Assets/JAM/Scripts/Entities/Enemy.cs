@@ -35,8 +35,13 @@ namespace JAM.Entities.Enemy
             var path = AStarManager.Instance.CreatePath(_newPosition, tilePosition);
             if (path == null) { return; }
             if (path.Count < 3) { return; }
-            if ((path.Count - 1) - 3 < 0) { return; }
-            var pathSelected = path[(path.Count - 1) - 3];
+            if (path.Count == 1) { return; }
+            int indexPath = (path.Count - 1) - 3;
+            if (indexPath < 3) 
+            {
+                indexPath = 1;
+            }
+            var pathSelected = path[indexPath];
             _newPosition = new Vector3Int(pathSelected.X, pathSelected.Y, 0);
             var pos = TileMapManager.Instance.GetWorldPosition(
                 new Vector3Int(pathSelected.X, pathSelected.Y, 0));
