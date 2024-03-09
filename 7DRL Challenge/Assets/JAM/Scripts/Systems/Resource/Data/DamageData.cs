@@ -1,4 +1,4 @@
-namespace BossRushJam2024
+namespace JAM
 {
     public class DamageData
     {

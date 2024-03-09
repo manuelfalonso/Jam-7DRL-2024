@@ -26,7 +26,7 @@ namespace JAM.TileMap
         [SerializeField] private int _maxObstacle = 5;
         [Tooltip("Tile to generate as an obstacle.")]
         [SerializeField] private Tile _obstacleTile;
-        
+
         [Tooltip("Horizontal tile size for the tileMap.")]
         private int _horizontalTileSize;
         [Tooltip("Vertical tile size for the tileMap.")]
@@ -37,35 +37,17 @@ namespace JAM.TileMap
         private readonly List<Vector3Int> _obstaclePositions = new();
         #endregion
 
+
         #region MonoBehaviour Callbacks
         protected override void Awake()
         {
             base.Awake();
-            
+
             GetNewTileSize();
             GenerateRandomTileMap();
         }
+        #endregion
 
-        #region TEMPORAL
-        private void Update()
-        {
-            if (Input.GetMouseButtonDown(0))
-            {
-                var hit = Physics2D.GetRayIntersection(Camera.main.ScreenPointToRay(Input.mousePosition));
-                if (hit.collider != null)
-                {
-                    var tilePosition = _tileMap.WorldToCell(hit.point);
-                    if (tilePosition.x < 0 || tilePosition.x >= _horizontalTileSize || tilePosition.y < 0 || tilePosition.y >= _verticalTileSize)
-                    {
-                        return;
-                    }
-                    
-                    IsObstacle(tilePosition);
-                }
-            }
-        }
-        #endregion
-        #endregion
 
         #region Public Methods
         /// <summary>
@@ -79,10 +61,10 @@ namespace JAM.TileMap
             {
                 ClearTileMap();
             }
-            
+
             //Get new tile size
             GetNewTileSize();
-            
+
             // Choose random tile and paint the tileMap
             var tile = _tiles[Random.Range(0, _tiles.Length)];
             for (var x = 0; x < _horizontalTileSize; x++)
@@ -98,7 +80,7 @@ namespace JAM.TileMap
             // Generate obstacles
             GenerateObstacles();
         }
-        
+
         /// <summary>
         /// Clear all tiles from the tileMap.
         /// </summary>
@@ -109,7 +91,7 @@ namespace JAM.TileMap
             _isTileMapGenerated = false;
             _obstaclePositions.Clear();
         }
-        
+
         /// <summary>
         /// Paint a tile on the tileMap.
         /// </summary>
@@ -119,7 +101,7 @@ namespace JAM.TileMap
         {
             _tileMap.SetTile(position, tile);
         }
-        
+
         /// <summary>
         /// Check if the position is an obstacle.
         /// </summary>
@@ -130,7 +112,8 @@ namespace JAM.TileMap
             return _obstaclePositions.Contains(position);
         }
         #endregion
-        
+
+
         #region Private Methods
         /// <summary>
         /// Get new random tile size for the tileMap.
@@ -148,12 +131,12 @@ namespace JAM.TileMap
         {
             // Get total obstacles to generate
             var totalObstacles = Random.Range(_minObstacle, _maxObstacle);
-            
+
             for (var i = 0; i < totalObstacles; i++)
             {
                 var canPlaceObstacle = false;
                 var tilePosition = new Vector3Int();
-                
+
                 // Check if the position is near an obstacle
                 while (!canPlaceObstacle)
                 {
@@ -168,7 +151,7 @@ namespace JAM.TileMap
                 _tileMap.SetTile(tilePosition, _obstacleTile);
             }
         }
-        
+
         /// <summary>
         /// Get random tile position.
         /// </summary>
@@ -179,7 +162,7 @@ namespace JAM.TileMap
             var y = Random.Range(0, _verticalTileSize);
             return new Vector3Int(x, y, 0);
         }
-        
+
         /// <summary>
         /// Check if the position is near an obstacle.
         /// </summary>
@@ -188,7 +171,7 @@ namespace JAM.TileMap
         private bool GetIfNearObstacle(Vector3Int myObstacle)
         {
             var totalNearObstacles = 0;
-            
+
             // Check immediate neighbors
             for (var xOffset = -1; xOffset <= 1; xOffset++)
             {
@@ -204,5 +187,60 @@ namespace JAM.TileMap
             return totalNearObstacles > 1;
         }
         #endregion
+
+
+        #region Helpers
+        public TileSelectionData Selection(out bool success)
+        {
+            var data = new TileSelectionData();
+
+            var hit = Physics2D.GetRayIntersection(Camera.main.ScreenPointToRay(Input.mousePosition));
+            if (hit.collider != null)
+            {
+                var tilePosition = _tileMap.WorldToCell(hit.point);
+
+                data.TilePosition = tilePosition;
+                data.Tile = _tileMap.GetTile<Tile>(tilePosition);
+                data.IsObstacle = IsObstacle(tilePosition);
+
+                if (tilePosition.x < 0 || tilePosition.x >= _horizontalTileSize || tilePosition.y < 0 || tilePosition.y >= _verticalTileSize)
+                {
+                    success = false;
+                    return data;
+                }
+
+                success = true;
+            }
+            else
+            {
+                success = false;
+            }
+
+            return data;
+        }
+
+        public bool IsInBounds(Vector3Int position)
+        {
+            return position.x >= 0 && position.x < _horizontalTileSize && position.y >= 0 && position.y < _verticalTileSize;
+        }
+
+        public Tile GetTile(Vector3Int position)
+        {
+            return _tileMap.GetTile<Tile>(position);
+        }
+
+        public Vector3 GetCellCenter(Vector3Int position)
+        {
+            return _tileMap.GetCellCenterWorld(position);
+        }
+        #endregion
+
+
+        public struct TileSelectionData
+        {
+            public Vector3Int TilePosition;
+            public Tile Tile;
+            public bool IsObstacle;
+        }
     }
 }

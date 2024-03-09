@@ -1,7 +1,7 @@
 using UnityEngine;
-using BossRushJam2024.Audio;
+using JAM.Audio;
 
-namespace BossRushJam2024.Utils
+namespace JAM.Utils
 {
     //TODO: Review calling methods with string parameters, it's not the best way to do it.
     public class SFXEntityHelper : MonoBehaviour

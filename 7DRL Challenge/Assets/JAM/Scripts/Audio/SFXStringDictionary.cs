@@ -1,7 +1,7 @@
 using RotaryHeart.Lib.SerializableDictionary;
 using UnityEngine;
 
-namespace BossRushJam2024.Audio
+namespace JAM.Audio
 {
     [System.Serializable]
     public class SFXStringDictionary : SerializableDictionaryBase<string, SFXRack>

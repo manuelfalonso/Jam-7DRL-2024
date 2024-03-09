@@ -1,28 +1,31 @@
-using BossRushJam2024.Interfaces;
-using BossRushJam2024.Shared.Systems.Resource;
+using JAM.Interfaces;
+using JAM.Shared.Systems.Resource;
 using System;
-using Pampero.Stats;
+using JAM.Stats;
 using UnityEngine;
 
-namespace BossRushJam2024.Entities
+namespace JAM.Entities
 {
     public class Entity : MonoBehaviour, IDamageable, IHealable
     {
-        [SerializeField] protected ResourceSystem _healthSystem;
+        [SerializeField] protected ResourceSystemClient _healthSystem;
         [SerializeField] protected StatSheet _stats;
         [SerializeField] protected bool _chasing;
-        public StatContainer StatContainer { get; protected set; }
 
-        public ResourceSystem HealthSystem { get => _healthSystem; private set => _healthSystem = value; }
+        public StatContainer StatContainer { get; protected set; }
         public Action<DamageData> Damaged { get; set; }
+
+        public ResourceSystemClient HealthSystem => _healthSystem;
+        public bool IsChasing() => _chasing;
+
 
         protected virtual void Awake()
         {
             StatContainer = new StatContainer(_stats);
-            _healthSystem._amountEmptied.AddListener(DeathOfEntity);
+            _healthSystem.EmptyHealth -= DeathOfEntity;
+            _healthSystem.EmptyHealth += DeathOfEntity;
         }
 
-        public bool IsChasing() => _chasing;
 
         #region Interfaces
         public bool TryHeal(HealData data)
@@ -30,7 +33,7 @@ namespace BossRushJam2024.Entities
             if (data == null) { return false; }
             if (_healthSystem == null) { return false; }
 
-            _healthSystem.IncreaseAmount(data.Amount);
+            _healthSystem.HealPlayer(data);
 
             return true;
         }
@@ -40,7 +43,7 @@ namespace BossRushJam2024.Entities
             if (data == null) { return false; }
             if (_healthSystem == null) { return false; }
 
-            _healthSystem.DecreaseAmount(data.Amount);
+            _healthSystem.TakeDamagePlayer(data);
             Damaged?.Invoke(data);
 
             return true;
@@ -49,7 +52,6 @@ namespace BossRushJam2024.Entities
         protected virtual void DeathOfEntity(float toCall) 
         {
         }
-
         #endregion
     }
 }

@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace BossRushJam2024.Systems.Abilities
+namespace JAM.Systems.Abilities
 {
     internal static class AbilityManager
     {

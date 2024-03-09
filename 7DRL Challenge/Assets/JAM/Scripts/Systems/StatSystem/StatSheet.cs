@@ -2,9 +2,9 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-namespace Pampero.Stats
+namespace JAM.Stats
 {
-    [CreateAssetMenu(fileName = "New Stat Sheet", menuName = "Pampero/Stat Sheet")]
+    [CreateAssetMenu(fileName = "New Stat Sheet", menuName = "JAM/Stat Sheet")]
     public class StatSheet : ScriptableObject
     {
         //[SerializeField] private Sprite _sprite;

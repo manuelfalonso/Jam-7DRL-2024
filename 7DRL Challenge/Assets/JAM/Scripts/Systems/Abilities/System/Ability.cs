@@ -2,7 +2,7 @@ using NaughtyAttributes;
 using System;
 using UnityEngine;
 
-namespace BossRushJam2024.Systems.Abilities
+namespace JAM.Systems.Abilities
 {
     public abstract class Ability : ScriptableObject
     {

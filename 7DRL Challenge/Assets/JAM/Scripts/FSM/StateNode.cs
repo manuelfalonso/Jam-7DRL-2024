@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace BossRushJam2024.FSM
+namespace JAM.FSM
 {
     public partial class StateMachine
     {

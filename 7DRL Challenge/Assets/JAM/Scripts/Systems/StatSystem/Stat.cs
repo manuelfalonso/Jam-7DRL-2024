@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Pampero.Stats
+namespace JAM.Stats
 {
     [System.Serializable]
     public abstract class Stat<T, TModifier> : IStat<T> where TModifier : StatModifier<T>

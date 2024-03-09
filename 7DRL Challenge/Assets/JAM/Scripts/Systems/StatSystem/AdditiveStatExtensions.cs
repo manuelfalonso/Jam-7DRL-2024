@@ -1,4 +1,4 @@
-﻿namespace Pampero.Stats
+﻿namespace JAM.Stats
 {
     public static class AdditiveStatExtensions
     {

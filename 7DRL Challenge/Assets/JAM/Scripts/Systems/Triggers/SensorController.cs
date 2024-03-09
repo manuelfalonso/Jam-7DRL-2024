@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-namespace BossRushJam2024
+namespace JAM
 {
     [IncludeInSettings(true)]
     public class SensorController : MonoBehaviour
