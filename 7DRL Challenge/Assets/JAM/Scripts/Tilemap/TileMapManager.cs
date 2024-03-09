@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using NaughtyAttributes;
 using UnityEngine;
@@ -37,18 +38,43 @@ namespace JAM.TileMap
         private readonly List<Vector3Int> _obstaclePositions = new();
         #endregion
 
-
+        #region Properties
+        public int HorizontalTileSize => _horizontalTileSize;
+        public int VerticalTileSize => _verticalTileSize;
+        #endregion
+        
+        #region Events
+        public Action OnTilesGenerated;
+        #endregion
+        
         #region MonoBehaviour Callbacks
         protected override void Awake()
         {
             base.Awake();
-
+            
             GetNewTileSize();
             GenerateRandomTileMap();
         }
+
+        #region TEMPORAL
+        private void Update()
+        {
+            
+            if (Input.GetMouseButtonDown(0))
+            {
+                var hit = Physics2D.GetRayIntersection(Camera.main.ScreenPointToRay(Input.mousePosition));
+                if (hit.collider != null)
+                {
+                    var tilePosition = _tileMap.WorldToCell(hit.point);
+                    if (!IsInsideBounds(tilePosition)) { return; }
+                    
+                    IsObstacle(tilePosition);
+                }
+            }
+        }
         #endregion
-
-
+        #endregion
+        
         #region Public Methods
         /// <summary>
         /// Generate random tileMap with random tiles.
@@ -61,10 +87,10 @@ namespace JAM.TileMap
             {
                 ClearTileMap();
             }
-
+            
             //Get new tile size
             GetNewTileSize();
-
+            
             // Choose random tile and paint the tileMap
             var tile = _tiles[Random.Range(0, _tiles.Length)];
             for (var x = 0; x < _horizontalTileSize; x++)
@@ -79,8 +105,9 @@ namespace JAM.TileMap
             _isTileMapGenerated = true;
             // Generate obstacles
             GenerateObstacles();
+            OnTilesGenerated?.Invoke();
         }
-
+        
         /// <summary>
         /// Clear all tiles from the tileMap.
         /// </summary>
@@ -91,7 +118,7 @@ namespace JAM.TileMap
             _isTileMapGenerated = false;
             _obstaclePositions.Clear();
         }
-
+        
         /// <summary>
         /// Paint a tile on the tileMap.
         /// </summary>
@@ -101,7 +128,7 @@ namespace JAM.TileMap
         {
             _tileMap.SetTile(position, tile);
         }
-
+        
         /// <summary>
         /// Check if the position is an obstacle.
         /// </summary>
@@ -111,9 +138,26 @@ namespace JAM.TileMap
         {
             return _obstaclePositions.Contains(position);
         }
+
+        public bool IsInsideBounds(Vector3Int tilePosition)
+        {
+            return tilePosition.x >= 0 && 
+                   tilePosition.x < _horizontalTileSize && 
+                   tilePosition.y >= 0 &&
+                   tilePosition.y < _verticalTileSize;
+        }
+        
+        public Vector3Int GetTilePosition(Vector3 worldPosition)
+        {
+            return _tileMap.WorldToCell(worldPosition);
+        }
+        
+        public Vector3 GetWorldPosition(Vector3Int tilePosition)
+        {
+            return _tileMap.GetCellCenterWorld(tilePosition);
+        }
         #endregion
-
-
+        
         #region Private Methods
         /// <summary>
         /// Get new random tile size for the tileMap.
@@ -131,12 +175,12 @@ namespace JAM.TileMap
         {
             // Get total obstacles to generate
             var totalObstacles = Random.Range(_minObstacle, _maxObstacle);
-
+            
             for (var i = 0; i < totalObstacles; i++)
             {
                 var canPlaceObstacle = false;
                 var tilePosition = new Vector3Int();
-
+                
                 // Check if the position is near an obstacle
                 while (!canPlaceObstacle)
                 {
@@ -151,7 +195,7 @@ namespace JAM.TileMap
                 _tileMap.SetTile(tilePosition, _obstacleTile);
             }
         }
-
+        
         /// <summary>
         /// Get random tile position.
         /// </summary>
@@ -162,7 +206,7 @@ namespace JAM.TileMap
             var y = Random.Range(0, _verticalTileSize);
             return new Vector3Int(x, y, 0);
         }
-
+        
         /// <summary>
         /// Check if the position is near an obstacle.
         /// </summary>
@@ -171,7 +215,7 @@ namespace JAM.TileMap
         private bool GetIfNearObstacle(Vector3Int myObstacle)
         {
             var totalNearObstacles = 0;
-
+            
             // Check immediate neighbors
             for (var xOffset = -1; xOffset <= 1; xOffset++)
             {
