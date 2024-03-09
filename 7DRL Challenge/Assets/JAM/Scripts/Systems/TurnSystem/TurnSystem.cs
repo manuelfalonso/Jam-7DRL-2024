@@ -1,3 +1,4 @@
+using JAM.Entities.Enemy;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -12,7 +13,7 @@ namespace JAM
         private bool playerTurn;
         private bool hasMoved;
         private bool hasAttacked;
-        private List<BossRushJam2024.Entities.Enemy.Enemy> enemies;
+        private List<Enemy> enemies;
 
         public Action onMove;
         public Action onAttack;
@@ -31,7 +32,7 @@ namespace JAM
             onTurnEnd += OnEnemiesTurn;
             onTurnStart += OnPlayerTurnStart;
             onTurnStart += SumTurn;
-            enemies = new List<BossRushJam2024.Entities.Enemy.Enemy>();
+            enemies = new List<Enemy>();
         }
 
         private void OnPlayerMove() 
@@ -61,7 +62,7 @@ namespace JAM
              for (int i = 0; i < enemies.Count; i++)
              {
                 enemies[i].Execute();
-             }
+            }
             onTurnStart?.Invoke();
         }
 
@@ -75,7 +76,7 @@ namespace JAM
             turnNumber = 1;
         }
 
-        public void AddEnemyToList(BossRushJam2024.Entities.Enemy.Enemy enemy) 
+        public void AddEnemyToList(Enemy enemy) 
         {
             enemies.Add(enemy);
         }
