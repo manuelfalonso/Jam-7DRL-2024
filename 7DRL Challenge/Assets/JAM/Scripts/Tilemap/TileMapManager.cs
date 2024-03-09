@@ -40,7 +40,9 @@ namespace JAM.TileMap
         private readonly List<Vector3Int> _obstaclePositions = new();
         #endregion
 
+        #region Events
         public Action OnTilesGenerated;
+        #endregion
 
         #region MonoBehaviour Callbacks
         protected override void Awake()

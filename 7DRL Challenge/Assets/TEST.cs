@@ -1,7 +1,6 @@
-using System;
 using JAM.TileMap;
 using UnityEngine;
-using UnityEngine.InputSystem;
+using JAM.Manager.Pathfinding;
 
 namespace JAM
 {
