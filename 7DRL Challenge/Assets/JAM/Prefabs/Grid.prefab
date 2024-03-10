@@ -408,3 +408,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _tileMap: {fileID: 1601368616557496931}
+  _invisibleTile: {fileID: 11400000, guid: 16930e7c2fd279940940f5228bcf7603, type: 2}

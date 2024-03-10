@@ -15,21 +15,14 @@ namespace JAM.Manager.Pathfinding
         private Astar _aStar;
         private BoundsInt _bounds;
 
-        private void Start()
-        {
-            TileMapManager.Instance.OnTilesGenerated -= RecalculateBounds;
-            TileMapManager.Instance.OnTilesGenerated += RecalculateBounds;
-        }
-
         private void OnEnable()
         {
-            TileMapManager.Instance.OnTilesGenerated -= RecalculateBounds;
-            TileMapManager.Instance.OnTilesGenerated += RecalculateBounds;
+            TileMapManager.Instance.SubscribeToTileMapGenerated(RecalculateBounds);
         }
 
         private void OnDisable()
         {
-            TileMapManager.Instance.OnTilesGenerated -= RecalculateBounds;
+            TileMapManager.Instance.UnsubscribeToTileMapGenerated(RecalculateBounds);
         }
         
         public List<Spot> CreatePath(Vector3Int myPos, Vector3Int finalPos)

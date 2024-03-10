@@ -36,6 +36,8 @@ namespace JAM.TileMap
         private bool _isTileMapGenerated;
         [Tooltip("List of obstacle positions.")]
         private readonly List<Vector3Int> _obstaclePositions = new();
+
+        bool _isReady;
         #endregion
 
         #region Properties
@@ -103,6 +105,7 @@ namespace JAM.TileMap
             }
 
             _isTileMapGenerated = true;
+            _isReady = true;
             // Generate obstacles
             GenerateObstacles();
             OnTilesGenerated?.Invoke();
@@ -127,6 +130,24 @@ namespace JAM.TileMap
         public void PaintTile(Vector3Int position, Tile tile)
         {
             _tileMap.SetTile(position, tile);
+        }
+
+        public void SubscribeToTileMapGenerated(Action tileMapGenerated) 
+        {
+            if (_isReady) 
+            {
+                tileMapGenerated?.Invoke();
+            }
+            else
+            {
+                OnTilesGenerated -= tileMapGenerated;
+                OnTilesGenerated += tileMapGenerated;
+            }
+        }
+
+        public void UnsubscribeToTileMapGenerated(Action tileMapGenetared) 
+        {
+            OnTilesGenerated -= tileMapGenetared;
         }
         
         /// <summary>

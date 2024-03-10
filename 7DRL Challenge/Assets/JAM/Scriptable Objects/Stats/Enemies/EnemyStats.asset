@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e0aa21afe67073346ae9dfc370b3f516, type: 3}
-  m_Name: Player Stat Sheet
+  m_Name: EnemyStats
   m_EditorClassIdentifier: 
   _floatStats:
   - _name: Life
-    _baseValue: 10
+    _baseValue: 3
   _intStats:
   - _name: TotalMovementTiles
     _baseValue: 3
