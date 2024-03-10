@@ -1,7 +1,4 @@
-using JAM.Entities;
-using JAM;
-using System.Collections;
-using System.Collections.Generic;
+using JAM.Entities._Player;
 using UnityEngine;
 using JAM.TileMap;
 using JAM.Manager.Pathfinding;
@@ -11,7 +8,6 @@ namespace JAM.Entities.Enemy
 {
     public class Enemy : Entity
     {
-        [SerializeField] private GameObject _player;
         [SerializeField] private Attack _enemyAttack;
         private Vector3Int _newPosition;
         private int _distanceToPlayer;
@@ -31,12 +27,11 @@ namespace JAM.Entities.Enemy
         {
             TurnSystem.Instance.AddEnemyToList(this);
             _newPosition = TileMapManager.Instance.GetTilePosition(transform.position);
-            transform.position = _newPosition;
         }
 
         private void Move() 
         {
-            var tilePosition = TileMapManager.Instance.GetTilePosition(_player.transform.position);
+            var tilePosition = TileMapManager.Instance.GetTilePosition(Player.Instance.transform.position);
             if (!TileMapManager.Instance.IsInsideBounds(tilePosition) ||
                 TileMapManager.Instance.IsObstacle(tilePosition)) { return; }
             

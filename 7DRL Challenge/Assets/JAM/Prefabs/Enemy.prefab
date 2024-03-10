@@ -134,8 +134,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _healthSystem: {fileID: 2817882546159353192}
   _stats: {fileID: 11400000, guid: 05bd1c255d6655d40abe37b9240fa830, type: 2}
+  _sfxEntityHelper: {fileID: 0}
   _chasing: 0
-  _player: {fileID: 0}
   _enemyAttack: {fileID: 276863566362899046}
 --- !u!114 &7442071138135917387
 MonoBehaviour:
@@ -192,6 +192,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 81f50023763c195448a3eb4f71e52c74, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _useView: 0
   _resourceSystemView: {fileID: 0}
 --- !u!1 &6311828212630328427
 GameObject:
