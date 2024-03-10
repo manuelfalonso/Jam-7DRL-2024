@@ -96,6 +96,7 @@ GameObject:
   - component: {fileID: 9105594994882411326}
   - component: {fileID: 7442071138135917387}
   - component: {fileID: 2817882546159353192}
+  - component: {fileID: 2741432364751460383}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Untagged
@@ -134,7 +135,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _healthSystem: {fileID: 2817882546159353192}
   _stats: {fileID: 11400000, guid: 05bd1c255d6655d40abe37b9240fa830, type: 2}
-  _sfxEntityHelper: {fileID: 0}
+  _sfxEntityHelper: {fileID: 2741432364751460383}
+  _hurtSFX: 
+  _deathSFX: 
   _chasing: 0
   _enemyAttack: {fileID: 276863566362899046}
 --- !u!114 &7442071138135917387
@@ -194,6 +197,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _useView: 0
   _resourceSystemView: {fileID: 0}
+--- !u!114 &2741432364751460383
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4571116025072133583}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 01ba7f5e1e340be4ca9991ca6c23548c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _audioData: {fileID: 11400000, guid: 8f34b259c041ea74a8a5072aa9625294, type: 2}
 --- !u!1 &6311828212630328427
 GameObject:
   m_ObjectHideFlags: 0
