@@ -31,6 +31,8 @@ namespace JAM.Spells
         public bool AOE => _AOE;
         public bool Cross => _cross;
         public Image Image => _image;
+
+
     }
 
     public enum TypeOfSpell
