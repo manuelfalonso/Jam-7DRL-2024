@@ -177,6 +177,11 @@ namespace JAM.TileMap
         {
             return _tileMap.GetCellCenterWorld(tilePosition);
         }
+        
+        public bool IsDistanceValid(Vector3Int start, Vector3Int end, int distance)
+        {
+            return Vector3Int.Distance(start, end) > distance;
+        }
         #endregion
         
         #region Private Methods
@@ -221,7 +226,7 @@ namespace JAM.TileMap
         /// Get random tile position.
         /// </summary>
         /// <returns> Random tile position. </returns>
-        private Vector3Int GetRandomTilePosition()
+        public Vector3Int GetRandomTilePosition()
         {
             var x = Random.Range(0, _horizontalTileSize);
             var y = Random.Range(0, _verticalTileSize);

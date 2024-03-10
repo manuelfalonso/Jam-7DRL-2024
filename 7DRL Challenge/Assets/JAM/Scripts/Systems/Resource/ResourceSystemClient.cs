@@ -9,6 +9,7 @@ namespace JAM.Shared.Systems.Resource
     /// </summary>
     public class ResourceSystemClient : MonoBehaviour
     {
+        [SerializeField] private bool _useView;
         [SerializeField] private ResourceSystemView _resourceSystemView;
 
         private IResourceSystem _entityHealthSystem;
@@ -26,6 +27,7 @@ namespace JAM.Shared.Systems.Resource
 
         private void InitializeResourceSystemView()
         {
+            if(!_useView) {return;}
             _resourceSystemView.MinLife = 0f;
             _resourceSystemView.MaxLife = _entityHealthSystem.MaxAmount;
             _resourceSystemView.UpdateHealthBar(_entityHealthSystem.Amount);
