@@ -189,11 +189,6 @@ namespace JAM.TileMap
         {
             return _tileMap.GetCellCenterWorld(tilePosition);
         }
-        
-        public bool IsDistanceValid(Vector3Int start, Vector3Int end, int distance)
-        {
-            return Vector3Int.Distance(start, end) > distance;
-        }
         #endregion
         
         #region Private Methods

@@ -1,5 +1,5 @@
 using JAM.Entities.Enemy;
-using JAM.Entities.Player;
+using JAM.Entities._Player;
 using JAM.Spells;
 using JAM.TileMap;
 using UnityEngine;

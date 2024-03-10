@@ -1,4 +1,3 @@
-using JAM.Entities.Player;
 using JAM.TileMap;
 using System.Collections;
 using System.Collections.Generic;
