@@ -42,7 +42,7 @@ MonoBehaviour:
     _values:
     - _data:
         Clip: {fileID: 8300000, guid: f9123bfb11f3c654c8945f035c3cb4be, type: 3}
-        Volume: 1
+        Volume: 0.8
         Pitch: 1
         SpatialBlend: 0
         PlayOnAwake: 1

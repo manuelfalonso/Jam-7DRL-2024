@@ -12,6 +12,8 @@ namespace JAM.Entities
         [SerializeField] protected ResourceSystemClient _healthSystem;
         [SerializeField] protected StatSheet _stats;
         [SerializeField] protected SFXEntityHelper _sfxEntityHelper;
+        [SerializeField] protected string _hurtSFX;
+        [SerializeField] protected string _deathSFX;
         [SerializeField] protected bool _chasing;
 
         public StatContainer StatContainer { get; protected set; }
@@ -48,11 +50,15 @@ namespace JAM.Entities
             _healthSystem.TakeDamagePlayer(data);
             Damaged?.Invoke(data);
 
+            // Is Voice due to the fact that should be interrupted and start again.
+            if (!string.IsNullOrEmpty(_hurtSFX)) { _sfxEntityHelper.SFX_PlayVoice(_hurtSFX); }
+
             return true;
         }
 
         protected virtual void DeathOfEntity(float toCall) 
         {
+            if (!string.IsNullOrEmpty(_deathSFX)) { _sfxEntityHelper.SFX_PlayVoice(_deathSFX); }
         }
         #endregion
     }
