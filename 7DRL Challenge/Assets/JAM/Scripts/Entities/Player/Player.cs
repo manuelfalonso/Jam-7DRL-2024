@@ -1,19 +1,47 @@
+using System.Collections;
+using JAM.Spells;
 using JAM.Stats;
 using JAM.TileMap;
 using UnityEngine;
+using Utils.Singleton;
 
 namespace JAM.Entities._Player
 {
     public class Player : Entity
     {
-        [SerializeField] private Vector3Int _initialPosition;
+        [SerializeField] private Vector3Int _currentPosition;
+        [SerializeField] private SpellsShooter _spellShooter;
         
         private static Player _instance;
         private PlayerInputs _inputActions;
         private int _leftMoves;
         
-        public Vector3Int CurrentPositionInTile => _initialPosition;
+        public Vector3Int CurrentPositionInTile => _currentPosition;
         public static Player Instance => _instance;
+
+        private void Update()
+        {
+            if (TurnSystem.Instance.IsPlayerTurn() && !TurnSystem.Instance.HasPlayerAttacked())
+            {
+                if (Input.GetMouseButtonDown(0))
+                {
+                    var hit = Physics2D.GetRayIntersection(Camera.main.ScreenPointToRay(Input.mousePosition));
+                    if (hit.collider != null)
+                    {
+                        var tile = TileMapManager.Instance.Tilemap.WorldToCell(hit.point);
+                        if (!TileMapManager.Instance.IsInsideBounds(tile)) { return; }
+
+                        //IsObstacle(tilePosition);
+                        if(_spellShooter.ShootSpell(_currentPosition, tile))
+                        {
+                            TurnSystem.Instance.onAttack?.Invoke();
+                        }
+                    }
+                }
+            }
+
+        }
+
 
         protected override void Awake()
         {
@@ -37,13 +65,13 @@ namespace JAM.Entities._Player
 
         private void SetStartPosition()
         {
-            while (TileMapManager.Instance.IsObstacle(_initialPosition)
-                && TileMapManager.Instance.IsInBounds(_initialPosition))
+            while (TileMapManager.Instance.IsObstacle(_currentPosition)
+                && TileMapManager.Instance.IsInBounds(_currentPosition))
             {
-                _initialPosition.x++;
+                _currentPosition.x++;
             }
 
-            transform.position = TileMapManager.Instance.GetCellCenter(_initialPosition);
+            transform.position = TileMapManager.Instance.GetCellCenter(_currentPosition);
         }
 
         private void GetMovementValues()
@@ -76,7 +104,7 @@ namespace JAM.Entities._Player
                TileMapManager.Instance.IsObstacle(newPos)) { return; }
             
             transform.position = TileMapManager.Instance.GetCellCenter(newPos);
-            _initialPosition = newPos;
+            _currentPosition = newPos;
             _leftMoves--;
         }
 

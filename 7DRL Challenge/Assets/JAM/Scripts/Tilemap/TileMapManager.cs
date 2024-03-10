@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.Contracts;
+using JAM.Manager.Pathfinding;
 using NaughtyAttributes;
 using UnityEngine;
 using UnityEngine.Tilemaps;
@@ -38,6 +40,9 @@ namespace JAM.TileMap
         private readonly List<Vector3Int> _obstaclePositions = new();
 
         bool _isReady;
+
+        public Tilemap Tilemap => _tileMap;
+
         #endregion
 
         #region Properties
@@ -70,7 +75,7 @@ namespace JAM.TileMap
                     var tilePosition = _tileMap.WorldToCell(hit.point);
                     if (!IsInsideBounds(tilePosition)) { return; }
                     
-                    IsObstacle(tilePosition);
+                    //IsObstacle(tilePosition);
                 }
             }
         }
@@ -78,6 +83,13 @@ namespace JAM.TileMap
         #endregion
         
         #region Public Methods
+
+        public bool IsDistanceValid(Vector3Int start, Vector3Int end, int distance)
+        {
+            var path = AStarManager.Instance.CreatePath(start, end);
+            return path.Count < distance;  
+        }
+
         /// <summary>
         /// Generate random tileMap with random tiles.
         /// </summary>

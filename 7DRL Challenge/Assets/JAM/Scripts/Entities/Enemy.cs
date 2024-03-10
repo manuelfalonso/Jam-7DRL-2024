@@ -13,6 +13,7 @@ namespace JAM.Entities.Enemy
         private int _distanceToPlayer;
         private int _movesLeft;
 
+        public Vector3Int MyPosition => _newPosition;
         protected override void Awake()
         {
             base.Awake();
