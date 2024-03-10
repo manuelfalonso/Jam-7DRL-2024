@@ -1,5 +1,3 @@
-using JAM.Entities;
-using JAM;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -13,9 +11,10 @@ namespace JAM.Entities.Enemy
     {
         [SerializeField] private GameObject _player;
         [SerializeField] private Attack _enemyAttack;
-        private Vector3Int _newPosition;
+        private Vector3Int _initialPos;
         private int _distanceToPlayer;
         private int _movesLeft;
+        private float _timeToMove = 0.5f;
 
         protected override void Awake()
         {
@@ -24,14 +23,14 @@ namespace JAM.Entities.Enemy
             _enemyAttack.gameObject.SetActive(false);
             
             GetMovementValues();
+            GetTimeToMove();
             TurnSystem.Instance.onTurnStart += GetMovementValues;
         }
 
         private void Start()
         {
             TurnSystem.Instance.AddEnemyToList(this);
-            _newPosition = TileMapManager.Instance.GetTilePosition(transform.position);
-            transform.position = _newPosition;
+            _initialPos = TileMapManager.Instance.GetTilePosition(transform.position);
         }
 
         private void Move() 
@@ -40,7 +39,7 @@ namespace JAM.Entities.Enemy
             if (!TileMapManager.Instance.IsInsideBounds(tilePosition) ||
                 TileMapManager.Instance.IsObstacle(tilePosition)) { return; }
             
-            List<Pathfinding.Spot> path = AStarManager.Instance.CreatePath(_newPosition, tilePosition);
+            var path = AStarManager.Instance.CreatePath(_initialPos, tilePosition);
             
             if (path == null) { return; }
             
@@ -56,29 +55,25 @@ namespace JAM.Entities.Enemy
             {
                 _distanceToPlayer = 1;
             }
-
-            /*Pathfinding.Spot pathSelected = path[_distanceToPlayer];
-            _newPosition = new Vector3Int(pathSelected.X, pathSelected.Y, 0);
-            var pos = TileMapManager.Instance.GetWorldPosition(new Vector3Int(pathSelected.X, pathSelected.Y, 0));
-            transform.position = pos;*/
+            
             StartCoroutine(MovingTowardsPosition(path));
         }
 
-        IEnumerator MovingTowardsPosition(List<Pathfinding.Spot> path) 
+        private IEnumerator MovingTowardsPosition(List<Pathfinding.Spot> path)
         {
-            int pathIndex = path.Count - 1;
-            while (pathIndex >= _distanceToPlayer) 
+            var iterations = 0;
+            while (_movesLeft > 0) 
             {
-                Pathfinding.Spot pathSelected = path[pathIndex];
-                _newPosition = new Vector3Int(pathSelected.X, pathSelected.Y, 0);
-                var pos = TileMapManager.Instance.GetWorldPosition(new Vector3Int(pathSelected.X, pathSelected.Y, 0));
-                transform.position = Vector3.MoveTowards(this.transform.position, pos, 1);
-                if (Vector3.Distance(this.transform.position, pos) <= 1) 
-                {
-                    pathIndex--;
-                }
+                iterations++;
+                var pathSelected = path[^iterations];
+                var newPosition = new Vector3Int(pathSelected.X, pathSelected.Y, 0);
+                var pos = TileMapManager.Instance.GetWorldPosition(newPosition);
+                
+                transform.position = pos;
+                _movesLeft--;
                 yield return new WaitForSeconds(0.3f);
             }
+            _initialPos = TileMapManager.Instance.GetTilePosition(transform.position);
         }
 
         private void Attack() 
@@ -111,5 +106,16 @@ namespace JAM.Entities.Enemy
             }
             _movesLeft = intStat.GetValue();
         }
+
+        private void GetTimeToMove()
+        {
+            StatContainer.TryGetValue("TimeToMove", out var time);
+            if (time is not FloatStat floatStat)
+            {
+                Debug.LogError("Couldn't find TimeToMove stat");
+                return;
+            }
+            _timeToMove = floatStat.GetValue();
+        } 
     }
 }
