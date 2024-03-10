@@ -15,5 +15,7 @@ MonoBehaviour:
   _floatStats:
   - _name: Life
     _baseValue: 10
-  _intStats: []
+  _intStats:
+  - _name: TotalMovementTiles
+    _baseValue: 3
   _boolStats: []

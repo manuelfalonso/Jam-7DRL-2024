@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using JAM.TileMap;
 using JAM.Manager.Pathfinding;
+using JAM.Stats;
 
 namespace JAM.Entities.Enemy
 {
@@ -13,13 +14,17 @@ namespace JAM.Entities.Enemy
         [SerializeField] private GameObject _player;
         [SerializeField] private Attack _enemyAttack;
         private Vector3Int _newPosition;
-        int distanceToPlayer;
+        private int _distanceToPlayer;
+        private int _movesLeft;
 
         protected override void Awake()
         {
             base.Awake();
-            distanceToPlayer = 0;
+            _distanceToPlayer = 0;
             _enemyAttack.gameObject.SetActive(false);
+            
+            GetMovementValues();
+            TurnSystem.Instance.onTurnStart += GetMovementValues;
         }
 
         private void Start()
@@ -34,28 +39,33 @@ namespace JAM.Entities.Enemy
             var tilePosition = TileMapManager.Instance.GetTilePosition(_player.transform.position);
             if (!TileMapManager.Instance.IsInsideBounds(tilePosition) ||
                 TileMapManager.Instance.IsObstacle(tilePosition)) { return; }
+            
             var path = AStarManager.Instance.CreatePath(_newPosition, tilePosition);
+            
             if (path == null) { return; }
+            
             if (path.Count == 1) 
             {
-                distanceToPlayer = 1;
+                _distanceToPlayer = 1;
                 return; 
             }
-            distanceToPlayer = (path.Count - 1) - 3;
-            if (distanceToPlayer < 3) 
+            
+            _distanceToPlayer = (path.Count - 1) - _movesLeft;
+            
+            if (_distanceToPlayer < _movesLeft) 
             {
-                distanceToPlayer = 1;
+                _distanceToPlayer = 1;
             }
-            var pathSelected = path[distanceToPlayer];
+            
+            var pathSelected = path[_distanceToPlayer];
             _newPosition = new Vector3Int(pathSelected.X, pathSelected.Y, 0);
-            var pos = TileMapManager.Instance.GetWorldPosition(
-                new Vector3Int(pathSelected.X, pathSelected.Y, 0));
+            var pos = TileMapManager.Instance.GetWorldPosition(new Vector3Int(pathSelected.X, pathSelected.Y, 0));
             transform.position = pos;
         }
 
         private void Attack() 
         {
-            if (distanceToPlayer == 1) 
+            if (_distanceToPlayer == 1) 
             {
                 _enemyAttack.gameObject.SetActive(true);
             }
@@ -71,6 +81,17 @@ namespace JAM.Entities.Enemy
         {
             base.DeathOfEntity(toCall);
             this.gameObject.SetActive(false);
+        }
+        
+        private void GetMovementValues()
+        {
+            StatContainer.TryGetValue("TotalMovementTiles", out var moves);
+            if (moves is not IntStat intStat)
+            {
+                Debug.LogError("Couldn't find TotalMovementTiles stat");
+                return;
+            }
+            _movesLeft = intStat.GetValue();
         }
     }
 }
