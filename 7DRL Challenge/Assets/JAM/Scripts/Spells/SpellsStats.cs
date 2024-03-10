@@ -1,3 +1,4 @@
+using JAM.Entities.Enemy;
 using NaughtyAttributes;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -10,6 +11,9 @@ namespace JAM.Spells
         [SerializeField] private string _spellName;
         [SerializeField] private TypeOfSpell _attackSpell;
         [SerializeField] private Image _image;
+        
+
+        [SerializeField] private bool _enemyAttack = false;
 
         [SerializeField] private int _tilesLength;
         [ShowIf("_attackSpell", TypeOfSpell.ATTACK)]
@@ -22,6 +26,8 @@ namespace JAM.Spells
         [ShowIf("_attackSpell", TypeOfSpell.ATTACK)]
         [HideIf("_AOE")]
         [SerializeField] private bool _cross;
+        [ShowIf("_attackSpell", TypeOfSpell.ATTACK)]
+        [SerializeField] private DirectionOfAttack _directionOfAttack;
 
         public TypeOfSpell AttackSpell => _attackSpell;
         public string SpellName => _spellName;
@@ -31,6 +37,8 @@ namespace JAM.Spells
         public bool AOE => _AOE;
         public bool Cross => _cross;
         public Image Image => _image;
+        public DirectionOfAttack DirectionOfAttack => _directionOfAttack;
+        public bool EnemyAttack => _enemyAttack;
 
 
     }
@@ -40,5 +48,10 @@ namespace JAM.Spells
         ATTACK,
         MOVEMENT,
         NONE
+    }
+    public enum DirectionOfAttack
+    {
+        CROSS,
+        STAR
     }
 }

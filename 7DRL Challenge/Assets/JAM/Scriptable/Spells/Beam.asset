@@ -10,12 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 07b3da3061a3fa140b04964e7c82d209, type: 3}
-  m_Name: Fireball
+  m_Name: Beam
   m_EditorClassIdentifier: 
   _spellName: Fireball
   _attackSpell: 0
+  _enemyAttack: 0
   _tilesLength: 20
   _damage: 1
-  _pierce: 0
-  _AOE: 1
+  _pierce: 1
+  _AOE: 0
   _cross: 0

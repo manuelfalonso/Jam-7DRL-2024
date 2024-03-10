@@ -1,3 +1,5 @@
+using JAM.Entities.Player;
+using JAM.TileMap;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,7 +10,7 @@ namespace JAM.Spells
     {
         public List<Spell> _spells;
 
-        private Spell _currentSpell;
+        [SerializeField] private Spell _currentSpell;
 
 
         void Start()
@@ -18,12 +20,23 @@ namespace JAM.Spells
                 Debug.Log("Upload spells TITAN");
                 return;
             }
-        }
-
-        public void ShootSpell() 
-        {
-            Instantiate(_currentSpell);
             
+        }
+        
+        public bool ShootSpell(Vector3Int start, Vector3Int tile) 
+        {
+            if(TileMapManager.Instance.IsDistanceValid(start, tile, _currentSpell.SpellStats.TilesLength))
+            {
+
+                if (_currentSpell.SpellStats.DirectionOfAttack == DirectionOfAttack.CROSS)
+                {
+
+                }
+                var instaciateSpell = Instantiate(_currentSpell);
+                instaciateSpell.Instaciate(tile);
+                return true;
+            }
+            return false;            
         }
 
         public void SetSpell(string spellName)

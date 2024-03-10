@@ -13,7 +13,7 @@ namespace JAM
         private bool playerTurn;
         private bool hasMoved;
         private bool hasAttacked;
-        private List<Enemy> enemies;
+        public List<Enemy> enemies;
 
         public Action onMove;
         public Action onAttack;
