@@ -1,3 +1,4 @@
+using JAM.Entities.Enemy;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -12,7 +13,7 @@ namespace JAM
         private bool playerTurn;
         private bool hasMoved;
         private bool hasAttacked;
-        // list<Enemigos> enemigos;
+        private List<Enemy> enemies;
 
         public Action onMove;
         public Action onAttack;
@@ -31,7 +32,7 @@ namespace JAM
             onTurnEnd += OnEnemiesTurn;
             onTurnStart += OnPlayerTurnStart;
             onTurnStart += SumTurn;
-            // enemigos = new list<Enemigos>();
+            enemies = new List<Enemy>();
         }
 
         private void OnPlayerMove() 
@@ -46,13 +47,11 @@ namespace JAM
 
         private void OnPlayerTurnEnd() 
         {
-            Debug.Log("OnPlayerTurnEnd");
             playerTurn = false;
         }
 
         private void OnPlayerTurnStart() 
         {
-            Debug.Log("OnPlayerTurnStart");
             playerTurn = true;
             hasMoved = false;
             hasAttacked = false;
@@ -60,12 +59,10 @@ namespace JAM
 
         private void OnEnemiesTurn() 
         {
-            Debug.Log("OnEnemiesTurn");
-            /* for (int i = 0; i < enemigos.Length; i++)
-             * {
-             *      enemigos[i].Execute();
-             * }
-             */
+             for (int i = 0; i < enemies.Count; i++)
+             {
+                enemies[i].Execute();
+            }
             onTurnStart?.Invoke();
         }
 
@@ -79,9 +76,9 @@ namespace JAM
             turnNumber = 1;
         }
 
-        public void AddEnemyToList() 
+        public void AddEnemyToList(Enemy enemy) 
         {
-            // enemigos.Add(enemigo);
+            enemies.Add(enemy);
         }
 
         public bool IsPlayerTurn() 
