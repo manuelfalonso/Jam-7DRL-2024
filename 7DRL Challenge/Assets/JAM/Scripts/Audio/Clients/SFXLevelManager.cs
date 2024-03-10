@@ -1,3 +1,4 @@
+using System;
 using NaughtyAttributes;
 using UnityEngine;
 using Utils.Singleton;
@@ -7,7 +8,6 @@ namespace JAM.Audio
     public class SFXLevelManager : MonoBehaviourSingleton<SFXLevelManager>
     {
         #region Private Variables
-        
         [SerializeField] private bool _useGeneralParameters;
         [SerializeField] private SFXScriptableData _levelData;
         [Header("General Parameters")]
@@ -15,11 +15,10 @@ namespace JAM.Audio
         [SerializeField, Range(0, 1)] private float _dialogueVolume = 1f;
         [SerializeField] private bool _muteOnStart;
         [SerializeField] private bool _setVolumesOnStart;
-
         #endregion
 
-        #region Monobehaviour
 
+        #region Monobehaviour
         private void Start()
         {
             InitializeRackInstances();
@@ -34,23 +33,21 @@ namespace JAM.Audio
             {
                 SetRackMute(_muteOnStart);
             }
-        }
 
+            //PlayOneShotAudio("GamePlay", Vector3.zero);
+        }
         #endregion
 
-
+        
         #region Public
-
         public void PlayOneShotAudio(string audioEvent, Vector3 pos)
         {
             AudioSource.PlayClipAtPoint(_levelData.SFXRack[audioEvent].Data.Clip, pos);
         }
-        
         #endregion
 
-
+        
         #region Private Methods
-
         private void SetRackVolume(float volume)
         {
             if(!_useGeneralParameters) { return; }
@@ -88,12 +85,10 @@ namespace JAM.Audio
             _levelData.SFXRack.InstantiateAll(transform);
             _levelData.VoiceRack.InstantiateAll(transform);
         }
-
         #endregion
 
 
         #region Buttons
-
         [Button]
         public void SetVolume() => SetRackVolume(_volume);
 
@@ -101,7 +96,6 @@ namespace JAM.Audio
 
         [Button]
         public void UnmuteVolume() => SetRackMute(false);
-
         #endregion
     }
 }

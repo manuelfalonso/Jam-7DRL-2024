@@ -7,11 +7,10 @@ namespace JAM.Utils
     public class SFXEntityHelper : MonoBehaviour
     {
         #region Private Variables
-        
         [SerializeField] private SFXScriptableData _audioData;
-        
         #endregion
         
+
         #region MonoBehaviour Callbacks
         private void Awake()
         {
@@ -29,6 +28,7 @@ namespace JAM.Utils
             _audioData.VoiceRack.InstantiateAll(transform);
         }
         #endregion
+
 
         #region Public Methods
         public void SFX_PlayAudio(AnimationEvent animationEvent)
@@ -62,8 +62,8 @@ namespace JAM.Utils
         }
         #endregion
 
-        #region Private Methods
 
+        #region Private Methods
         private void PlayAudio(string audio)
         {
             if (_audioData == null) return;

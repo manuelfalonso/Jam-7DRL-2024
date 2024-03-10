@@ -13,15 +13,17 @@ namespace JAM
         private bool playerTurn;
         private bool hasMoved;
         private bool hasAttacked;
-        public List<Enemy> enemies;
+        private List<Enemy> enemies =new();
 
         public Action onMove;
         public Action onAttack;
         public Action onTurnEnd;
         public Action onTurnStart;
 
-        private void Awake()
+        protected override void Awake()
         {
+            base.Awake();
+            
             turnNumber = 1;
             playerTurn = false;
             hasMoved = false;
@@ -32,7 +34,6 @@ namespace JAM
             onTurnEnd += OnEnemiesTurn;
             onTurnStart += OnPlayerTurnStart;
             onTurnStart += SumTurn;
-            enemies = new List<Enemy>();
         }
 
         private void OnPlayerMove() 
@@ -62,8 +63,9 @@ namespace JAM
              for (int i = 0; i < enemies.Count; i++)
              {
                 enemies[i].Execute();
-            }
-            onTurnStart?.Invoke();
+             }
+
+             onTurnStart?.Invoke();
         }
 
         private void SumTurn() 
@@ -79,6 +81,16 @@ namespace JAM
         public void AddEnemyToList(Enemy enemy) 
         {
             enemies.Add(enemy);
+        }
+
+        public void RemoveEnemyFromList(Enemy enemy) 
+        {
+            enemies.Remove(enemy);
+        }
+
+        public int GetNumberOfEnemies() 
+        {
+            return enemies.Count;
         }
 
         public bool IsPlayerTurn() 
@@ -99,6 +111,11 @@ namespace JAM
         public int GetTurnNumber() 
         {
             return turnNumber;
+        }
+        
+        public void AddEnemy(Enemy enemy) 
+        {
+            enemies.Add(enemy);
         }
     }
 }

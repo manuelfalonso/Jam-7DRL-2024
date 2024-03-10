@@ -1,0 +1,129 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 71b12caa384db084ab7e41f3ef5e0d03, type: 3}
+  m_Name: EntitiesAudio
+  m_EditorClassIdentifier: 
+  _sfxRack:
+    reorderableList:
+      canAdd: 1
+      canRemove: 1
+      draggable: 1
+      expandable: 1
+      multipleSelection: 1
+      isExpanded: 0
+      label:
+        m_Text: Keys
+        m_Image: {fileID: 0}
+        m_Tooltip: 
+      headerHeight: 18
+      footerHeight: 13
+      slideEasing: 0.15
+      verticalSpacing: 2
+      showDefaultBackground: 1
+      elementDisplayType: 0
+      elementNameProperty: 
+      elementNameOverride: 
+      elementIcon: {fileID: 0}
+    reqReferences: {fileID: 0}
+    isExpanded: 0
+    _keyValues:
+    - Footstep_grass
+    - Footstep_Stone
+    _keys:
+    - Footstep_grass
+    - Footstep_Stone
+    _values:
+    - _data:
+        Clip: {fileID: 8300000, guid: a9cf8d124807fb9408103ad3b0309e56, type: 3}
+        Volume: 0.6
+        Pitch: 0
+        SpatialBlend: 0
+        PlayOnAwake: 0
+        Loop: 0
+    - _data:
+        Clip: {fileID: 8300000, guid: c55b1011b476b434e928c43b4d208738, type: 3}
+        Volume: 0.6
+        Pitch: 0
+        SpatialBlend: 0
+        PlayOnAwake: 0
+        Loop: 0
+  _voiceRack:
+    reorderableList:
+      canAdd: 1
+      canRemove: 1
+      draggable: 1
+      expandable: 1
+      multipleSelection: 1
+      isExpanded: 1
+      label:
+        m_Text: Keys
+        m_Image: {fileID: 0}
+        m_Tooltip: 
+      headerHeight: 18
+      footerHeight: 13
+      slideEasing: 0.15
+      verticalSpacing: 2
+      showDefaultBackground: 1
+      elementDisplayType: 0
+      elementNameProperty: 
+      elementNameOverride: 
+      elementIcon: {fileID: 0}
+    reqReferences: {fileID: 0}
+    isExpanded: 1
+    _keyValues:
+    - Hurt_Beetle
+    - Hurt_Llama
+    - Hurt_Murcielago
+    - Hurt_Goose
+    - Death_Goose
+    _keys:
+    - Hurt_Beetle
+    - Hurt_Llama
+    - Hurt_Murcielago
+    - Hurt_Goose
+    - Death_Goose
+    _values:
+    - _data:
+        Clip: {fileID: 8300000, guid: b930f1613e48e6748960855cef406346, type: 3}
+        Volume: 0.6
+        Pitch: 0
+        SpatialBlend: 0
+        PlayOnAwake: 0
+        Loop: 0
+    - _data:
+        Clip: {fileID: 8300000, guid: d929702dd23cc934e8598acbb70568c5, type: 3}
+        Volume: 0.6
+        Pitch: 0
+        SpatialBlend: 0
+        PlayOnAwake: 0
+        Loop: 0
+    - _data:
+        Clip: {fileID: 8300000, guid: b9c18036949c26a43a6dea8415b1ffe1, type: 3}
+        Volume: 0.6
+        Pitch: 0
+        SpatialBlend: 0
+        PlayOnAwake: 0
+        Loop: 0
+    - _data:
+        Clip: {fileID: 0}
+        Volume: 0.6
+        Pitch: 0
+        SpatialBlend: 0
+        PlayOnAwake: 0
+        Loop: 0
+    - _data:
+        Clip: {fileID: 8300000, guid: cb09247d6439fa14382207caee1bb087, type: 3}
+        Volume: 0.6
+        Pitch: 0
+        SpatialBlend: 0
+        PlayOnAwake: 0
+        Loop: 0

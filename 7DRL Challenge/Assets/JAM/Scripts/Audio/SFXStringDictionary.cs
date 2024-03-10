@@ -7,12 +7,15 @@ namespace JAM.Audio
     public class SFXStringDictionary : SerializableDictionaryBase<string, SFXRack>
     {
         #region Public Methods
-
         public virtual void InstantiateAll(Transform t)
         {
             foreach (var rack in this)
             {
                 rack.Value.InstantiateEventInstance(t);
+                if (rack.Value.Instance.playOnAwake)
+                {
+                    rack.Value.Instance.Play();
+                }
             }
         }
 
@@ -39,7 +42,6 @@ namespace JAM.Audio
                 rack.Value.Instance.Stop();
             }
         }
-
         #endregion
     }
 }

@@ -5,7 +5,7 @@ using JAM.TileMap;
 using UnityEngine;
 using Utils.Singleton;
 
-namespace JAM.Entities.Player
+namespace JAM.Entities._Player
 {
     public class Player : Entity
     {
@@ -106,6 +106,12 @@ namespace JAM.Entities.Player
             transform.position = TileMapManager.Instance.GetCellCenter(newPos);
             _currentPosition = newPos;
             _leftMoves--;
+        }
+
+        protected override void DeathOfEntity(float toCall)
+        {
+            base.DeathOfEntity(toCall);
+            WinLoseCondition.Instance.onLose?.Invoke();
         }
     }
 }
