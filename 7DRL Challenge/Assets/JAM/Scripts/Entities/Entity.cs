@@ -2,6 +2,7 @@ using JAM.Interfaces;
 using JAM.Shared.Systems.Resource;
 using System;
 using JAM.Stats;
+using JAM.Utils;
 using UnityEngine;
 
 namespace JAM.Entities
@@ -10,6 +11,7 @@ namespace JAM.Entities
     {
         [SerializeField] protected ResourceSystemClient _healthSystem;
         [SerializeField] protected StatSheet _stats;
+        [SerializeField] protected SFXEntityHelper _sfxEntityHelper;
         [SerializeField] protected bool _chasing;
 
         public StatContainer StatContainer { get; protected set; }

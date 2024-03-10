@@ -1,9 +1,8 @@
-using System.Collections;
 using JAM.Stats;
 using JAM.TileMap;
 using UnityEngine;
 
-namespace JAM.Entities.Player
+namespace JAM.Entities._Player
 {
     public class Player : Entity
     {
@@ -14,7 +13,7 @@ namespace JAM.Entities.Player
         private int _leftMoves;
         
         public Vector3Int CurrentPositionInTile => _initialPosition;
-        public Player Instance => _instance;
+        public static Player Instance => _instance;
 
         protected override void Awake()
         {
