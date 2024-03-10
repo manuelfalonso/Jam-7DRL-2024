@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 8401361725890056485}
   - component: {fileID: 2359892457090031364}
   - component: {fileID: 3076605816658775632}
+  - component: {fileID: 4554703325549657584}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -49,7 +50,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _healthSystem: {fileID: 2359892457090031364}
   _stats: {fileID: 11400000, guid: f7590737bb690184fa9a76b9fd51cd01, type: 2}
+  _sfxEntityHelper: {fileID: 4554703325549657584}
+  _hurtSFX: Hurt_Goose
+  _deathSFX: Death_Goose
   _chasing: 0
+  _initialPosition: {x: 0, y: 0, z: 0}
 --- !u!114 &2359892457090031364
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -106,6 +111,19 @@ MonoBehaviour:
   _amountEmptied:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &4554703325549657584
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2990060470986033494}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 01ba7f5e1e340be4ca9991ca6c23548c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _audioData: {fileID: 11400000, guid: 8f34b259c041ea74a8a5072aa9625294, type: 2}
 --- !u!1 &3335075759943399645
 GameObject:
   m_ObjectHideFlags: 0
