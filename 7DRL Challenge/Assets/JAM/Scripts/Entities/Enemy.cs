@@ -75,6 +75,8 @@ namespace JAM.Entities.Enemy
         protected override void DeathOfEntity(float toCall)
         {
             base.DeathOfEntity(toCall);
+            TurnSystem.Instance.RemoveEnemyFromList(this);
+            WinLoseCondition.Instance.onWin?.Invoke();
             this.gameObject.SetActive(false);
         }
         

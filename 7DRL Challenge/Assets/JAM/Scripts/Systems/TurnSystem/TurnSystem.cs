@@ -83,6 +83,16 @@ namespace JAM
             enemies.Add(enemy);
         }
 
+        public void RemoveEnemyFromList(Enemy enemy) 
+        {
+            enemies.Remove(enemy);
+        }
+
+        public int GetNumberOfEnemies() 
+        {
+            return enemies.Count;
+        }
+
         public bool IsPlayerTurn() 
         {
             return playerTurn;

@@ -79,5 +79,11 @@ namespace JAM.Entities._Player
             _initialPosition = newPos;
             _leftMoves--;
         }
+
+        protected override void DeathOfEntity(float toCall)
+        {
+            base.DeathOfEntity(toCall);
+            WinLoseCondition.Instance.onLose?.Invoke();
+        }
     }
 }
