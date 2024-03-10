@@ -1,3 +1,4 @@
+using System;
 using NaughtyAttributes;
 using UnityEngine;
 using Utils.Singleton;
@@ -37,8 +38,7 @@ namespace JAM.Audio
         }
 
         #endregion
-
-
+        
         #region Public
 
         public void PlayOneShotAudio(string audioEvent, Vector3 pos)
@@ -47,8 +47,7 @@ namespace JAM.Audio
         }
         
         #endregion
-
-
+        
         #region Private Methods
 
         private void SetRackVolume(float volume)
@@ -90,7 +89,6 @@ namespace JAM.Audio
         }
 
         #endregion
-
 
         #region Buttons
 

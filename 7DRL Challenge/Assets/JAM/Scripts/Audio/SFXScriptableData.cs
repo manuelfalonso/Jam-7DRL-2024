@@ -4,7 +4,7 @@ using UnityEngine;
 namespace JAM.Audio
 {
     [Serializable]
-    [CreateAssetMenu(fileName = "New SFX Scriptable Data", menuName = "BossRushJam2024/Audio/SFX Scriptable Data")]
+    [CreateAssetMenu(fileName = "New SFX Scriptable Data", menuName = "JAM/Audio/SFX Scriptable Data")]
     public class SFXScriptableData : ScriptableObject
     {
         #region Private Variables
