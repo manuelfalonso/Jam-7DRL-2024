@@ -65,6 +65,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9105594994882411326, guid: a17afcf2513219d4c98ff46799f2a58f,
         type: 3}
+      propertyPath: _stats
+      value: 
+      objectReference: {fileID: 11400000, guid: 559dd367f6bd1a3419236d1730aad948,
+        type: 2}
+    - target: {fileID: 9105594994882411326, guid: a17afcf2513219d4c98ff46799f2a58f,
+        type: 3}
       propertyPath: _hurtSFX
       value: Hurt_Beetle
       objectReference: {fileID: 0}
