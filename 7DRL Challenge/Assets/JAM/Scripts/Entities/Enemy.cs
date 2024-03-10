@@ -40,7 +40,7 @@ namespace JAM.Entities.Enemy
             if (!TileMapManager.Instance.IsInsideBounds(tilePosition) ||
                 TileMapManager.Instance.IsObstacle(tilePosition)) { return; }
             
-            var path = AStarManager.Instance.CreatePath(_newPosition, tilePosition);
+            List<Pathfinding.Spot> path = AStarManager.Instance.CreatePath(_newPosition, tilePosition);
             
             if (path == null) { return; }
             
@@ -56,11 +56,29 @@ namespace JAM.Entities.Enemy
             {
                 _distanceToPlayer = 1;
             }
-            
-            var pathSelected = path[_distanceToPlayer];
+
+            /*Pathfinding.Spot pathSelected = path[_distanceToPlayer];
             _newPosition = new Vector3Int(pathSelected.X, pathSelected.Y, 0);
             var pos = TileMapManager.Instance.GetWorldPosition(new Vector3Int(pathSelected.X, pathSelected.Y, 0));
-            transform.position = pos;
+            transform.position = pos;*/
+            StartCoroutine(MovingTowardsPosition(path));
+        }
+
+        IEnumerator MovingTowardsPosition(List<Pathfinding.Spot> path) 
+        {
+            int pathIndex = path.Count - 1;
+            while (pathIndex >= _distanceToPlayer) 
+            {
+                Pathfinding.Spot pathSelected = path[pathIndex];
+                _newPosition = new Vector3Int(pathSelected.X, pathSelected.Y, 0);
+                var pos = TileMapManager.Instance.GetWorldPosition(new Vector3Int(pathSelected.X, pathSelected.Y, 0));
+                transform.position = Vector3.MoveTowards(this.transform.position, pos, 1);
+                if (Vector3.Distance(this.transform.position, pos) <= 1) 
+                {
+                    pathIndex--;
+                }
+                yield return new WaitForSeconds(0.3f);
+            }
         }
 
         private void Attack() 
