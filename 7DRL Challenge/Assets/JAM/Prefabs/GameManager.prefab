@@ -44,3 +44,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 961e7f45b071a974393fda4900c80ea2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _initialDistanceToPlayer: 4
+  _minEnemies: 1
+  _maxEnemies: 5
+  _enemies:
+  - {fileID: 8149770321832781720, guid: dcd7304f9333afd498a773b49da7907b, type: 3}
+  - {fileID: 8149770321832781720, guid: e3114209a19109b42beac748e12dd69d, type: 3}
+  - {fileID: 8149770321832781720, guid: 46540325322d7ea4ca18a4f3a94a8a43, type: 3}

@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using JAM.Entities.Enemy;
 using JAM.Entities._Player;
+using JAM.Manager.Pathfinding;
 using JAM.TileMap;
 using UnityEngine;
 using Utils.Singleton;
@@ -18,12 +19,13 @@ namespace JAM.Manager.Game
 
         private void OnEnable()
         {
-            TileMapManager.Instance.SubscribeToTileMapGenerated(MapRecalculated);
+            AStarManager.Instance.OnPathCalculated -= MapRecalculated;
+            AStarManager.Instance.OnPathCalculated += MapRecalculated;
         }
 
         private void OnDisable()
         {
-            TileMapManager.Instance.UnsubscribeToTileMapGenerated(MapRecalculated);
+            AStarManager.Instance.OnPathCalculated -= MapRecalculated;
         }
 
         private void MapRecalculated()
@@ -37,8 +39,10 @@ namespace JAM.Manager.Game
                 while (!validPlace)
                 {
                     var pos = TileMapManager.Instance.GetRandomTilePosition();
+                    var enemiesPos = TurnSystem.Instance.GetEnemiesPositions();
                     if (TileMapManager.Instance.IsObstacle(pos) ||
-                        TileMapManager.Instance.IsDistanceValid(pos, playerPos, _initialDistanceToPlayer))
+                        TileMapManager.Instance.IsDistanceValid(pos, playerPos, _initialDistanceToPlayer) &&
+                        !enemiesPos.Contains(pos))
                     {
                         continue;
                     }
