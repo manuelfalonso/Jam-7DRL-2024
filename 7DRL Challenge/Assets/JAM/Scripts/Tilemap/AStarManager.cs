@@ -1,4 +1,5 @@
-﻿using JAM.Pathfinding;
+﻿using System;
+using JAM.Pathfinding;
 using JAM.TileMap;
 using System.Collections.Generic;
 using UnityEngine;
@@ -11,6 +12,7 @@ namespace JAM.Manager.Pathfinding
     {
         [SerializeField] private Tilemap _tileMap;
         [SerializeField] private Tile _invisibleTile;
+        public Action OnPathCalculated;
         private Vector3Int[,] _spots;
         private Astar _aStar;
         private BoundsInt _bounds;
@@ -63,6 +65,7 @@ namespace JAM.Manager.Pathfinding
 
             CreateGrid();
             _aStar = new Astar(_bounds.size.x, _bounds.size.y);
+            OnPathCalculated?.Invoke();
         }
 
         private void GenerateTiles()
