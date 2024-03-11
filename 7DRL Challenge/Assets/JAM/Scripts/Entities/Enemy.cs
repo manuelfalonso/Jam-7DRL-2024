@@ -49,6 +49,8 @@ namespace JAM.Entities.Enemy
             if (path.Count == 1) 
             {
                 _distanceToPlayer = 1;
+                Attack();
+                TurnSystem.Instance.onTurnStart?.Invoke();
                 return; 
             }
             
@@ -76,6 +78,8 @@ namespace JAM.Entities.Enemy
                 _movesLeft--;
                 yield return new WaitForSeconds(_timeToMove);
             }
+            Attack();
+            TurnSystem.Instance.onTurnStart?.Invoke();
             _initialPos = TileMapManager.Instance.GetTilePosition(transform.position);
         }
 
@@ -90,7 +94,6 @@ namespace JAM.Entities.Enemy
         public void Execute() 
         {
             Move();
-            Attack();
         }
 
         protected override void DeathOfEntity(float toCall)

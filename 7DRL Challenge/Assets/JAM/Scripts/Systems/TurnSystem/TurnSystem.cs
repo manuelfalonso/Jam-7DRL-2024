@@ -10,6 +10,7 @@ namespace JAM
     public class TurnSystem : MonoBehaviourSingleton<TurnSystem>
     {
         private int turnNumber;
+        private int enemiesReady;
         private bool playerTurn;
         private bool hasMoved;
         private bool hasAttacked;
@@ -25,6 +26,7 @@ namespace JAM
             base.Awake();
             
             turnNumber = 1;
+            enemiesReady = 0;
             playerTurn = true;
             hasMoved = false;
             hasAttacked = false;
@@ -33,7 +35,6 @@ namespace JAM
             onTurnEnd += OnPlayerTurnEnd;
             onTurnEnd += OnEnemiesTurn;
             onTurnStart += OnPlayerTurnStart;
-            onTurnStart += SumTurn;
         }
 
         private void OnPlayerMove() 
@@ -53,9 +54,15 @@ namespace JAM
 
         private void OnPlayerTurnStart() 
         {
-            playerTurn = true;
-            hasMoved = false;
-            hasAttacked = false;
+            ++enemiesReady;
+            if (enemiesReady >= enemies.Count)
+            {
+                playerTurn = true;
+                hasMoved = false;
+                hasAttacked = false;
+                enemiesReady = 0;
+                SumTurn();
+            }
         }
 
         private void OnEnemiesTurn() 
@@ -64,8 +71,6 @@ namespace JAM
              {
                 enemies[i].Execute();
              }
-
-             onTurnStart?.Invoke();
         }
 
         private void SumTurn() 
