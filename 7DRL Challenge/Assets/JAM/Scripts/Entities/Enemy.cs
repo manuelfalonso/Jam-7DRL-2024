@@ -6,6 +6,7 @@ using JAM.Manager.Pathfinding;
 using JAM.Stats;
 using System.Collections;
 using System.Collections.Generic;
+using JAM.Manager.Game;
 
 namespace JAM.Entities.Enemy
 {
@@ -58,7 +59,7 @@ namespace JAM.Entities.Enemy
                 _distanceToPlayer = 1;
             }
             
-            StartCoroutine(MovingTowardsPosition(path));
+            GameManager.Instance.StartCoroutine(MovingTowardsPosition(path));
         }
 
         private IEnumerator MovingTowardsPosition(List<Pathfinding.Spot> path)
