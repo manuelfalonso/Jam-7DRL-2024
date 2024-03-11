@@ -97,6 +97,7 @@ GameObject:
   - component: {fileID: 7442071138135917387}
   - component: {fileID: 2817882546159353192}
   - component: {fileID: 2741432364751460383}
+  - component: {fileID: 1068296983532699501}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Untagged
@@ -210,6 +211,27 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _audioData: {fileID: 11400000, guid: 8f34b259c041ea74a8a5072aa9625294, type: 2}
+--- !u!95 &1068296983532699501
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4571116025072133583}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 0}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &6311828212630328427
 GameObject:
   m_ObjectHideFlags: 0

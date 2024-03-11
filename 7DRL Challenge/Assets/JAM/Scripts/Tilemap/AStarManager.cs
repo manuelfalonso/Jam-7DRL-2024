@@ -65,6 +65,7 @@ namespace JAM.Manager.Pathfinding
 
             CreateGrid();
             _aStar = new Astar(_bounds.size.x, _bounds.size.y);
+            _isReady = true;
             OnPathCalculated?.Invoke();
         }
 
@@ -80,6 +81,25 @@ namespace JAM.Manager.Pathfinding
                     _tileMap.SetTile(pos, _invisibleTile);
                 }
             }
+        }
+        
+        bool _isReady;
+        public void SubscribeToPathCalculated(Action pathCalculated) 
+        {
+            if (_isReady) 
+            {
+                pathCalculated?.Invoke();
+            }
+            else
+            {
+                OnPathCalculated -= pathCalculated;
+                OnPathCalculated += pathCalculated;
+            }
+        }
+
+        public void UnsubscribeToPathCalculated(Action pathCalculated) 
+        {
+            OnPathCalculated -= pathCalculated;
         }
         
         #region EXAMPLE

@@ -1,3 +1,4 @@
+using System;
 using JAM.Entities._Player;
 using UnityEngine;
 using JAM.TileMap;
@@ -57,7 +58,6 @@ namespace JAM.Entities.Enemy
                 _distanceToPlayer = 1;
             }
             
-            Debug.Log(gameObject.activeInHierarchy);
             StartCoroutine(MovingTowardsPosition(path));
         }
 
@@ -73,7 +73,7 @@ namespace JAM.Entities.Enemy
                 
                 transform.position = pos;
                 _movesLeft--;
-                yield return new WaitForSeconds(0.3f);
+                yield return new WaitForSeconds(_timeToMove);
             }
             _initialPos = TileMapManager.Instance.GetTilePosition(transform.position);
         }

@@ -20,13 +20,12 @@ namespace JAM.Manager.Game
 
         private void OnEnable()
         {
-            AStarManager.Instance.OnPathCalculated -= MapRecalculated;
-            AStarManager.Instance.OnPathCalculated += MapRecalculated;
+            AStarManager.Instance.SubscribeToPathCalculated(MapRecalculated);
         }
 
         private void OnDisable()
         {
-            AStarManager.Instance.OnPathCalculated -= MapRecalculated;
+            AStarManager.Instance.UnsubscribeToPathCalculated(MapRecalculated);
         }
 
         private void MapRecalculated()
