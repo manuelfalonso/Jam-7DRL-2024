@@ -25,7 +25,7 @@ namespace JAM
             base.Awake();
             
             turnNumber = 1;
-            playerTurn = false;
+            playerTurn = true;
             hasMoved = false;
             hasAttacked = false;
             onMove += OnPlayerMove;
