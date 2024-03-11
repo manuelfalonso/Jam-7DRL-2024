@@ -30,6 +30,7 @@ namespace JAM.Entities._Player
             _inputActions.Player.Move.started += ctx => CheckIfCanMove(ctx.ReadValue<Vector2>());
             
             TurnSystem.Instance.onTurnStart += GetMovementValues;
+            TileMapManager.Instance.OnTilesGenerated += SetStartPosition;
             
             GetMovementValues();
         }

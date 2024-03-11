@@ -1,7 +1,5 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+using JAM.TileMap;
 using UnityEngine.SceneManagement;
 using Utils.Singleton;
 
@@ -20,8 +18,13 @@ namespace JAM
 
         private void OnVictory() 
         {
+            TileMapManager.Instance.GenerateRandomTileMap();
+        }
+
+        private void CheckWinCondition()
+        {
             if (TurnSystem.Instance.GetNumberOfEnemies() == 0)
-                SceneManager.LoadScene("Main Gameplay");
+                onWin?.Invoke();
         }
 
         private void OnGameOver() 
