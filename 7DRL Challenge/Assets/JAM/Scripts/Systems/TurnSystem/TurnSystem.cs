@@ -117,5 +117,15 @@ namespace JAM
         {
             enemies.Add(enemy);
         }
+
+        public List<Vector3Int> GetEnemiesPositions()
+        {
+            List<Vector3Int> enemiesPositions = new List<Vector3Int>();
+            for (int i = 0; i < enemies.Count; i++)
+            {
+                enemiesPositions.Add(enemies[i].MyPosition);
+            }
+            return enemiesPositions;
+        }
     }
 }
