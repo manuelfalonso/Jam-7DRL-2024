@@ -70,6 +70,13 @@ namespace JAM.Entities.Enemy
                 iterations++;
                 var pathSelected = path[^iterations];
                 var newPosition = new Vector3Int(pathSelected.X, pathSelected.Y, 0);
+
+                if (newPosition == Player.Instance.CurrentPositionInTile ||
+                    TurnSystem.Instance.GetEnemiesPositions().Contains(newPosition))
+                {
+                    yield break;
+                }
+                
                 var pos = TileMapManager.Instance.GetWorldPosition(newPosition);
                 
                 transform.position = pos;
