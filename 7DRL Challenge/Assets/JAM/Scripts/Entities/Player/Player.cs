@@ -19,6 +19,26 @@ namespace JAM.Entities._Player
         public Vector3Int CurrentPositionInTile => _currentPosition;
         public static Player Instance => _instance;
 
+        protected override void Awake()
+        {
+            base.Awake();
+            
+            _instance = this;
+            
+            _inputActions = new PlayerInputs();
+            _inputActions.Enable();
+            _inputActions.Player.Move.started += ctx => CheckIfCanMove(ctx.ReadValue<Vector2>());
+            
+            TurnSystem.Instance.onTurnStart += GetMovementValues;
+            
+            GetMovementValues();
+        }
+        
+        private void Start()
+        {
+            SetStartPosition();
+        }
+        
         private void Update()
         {
             if (TurnSystem.Instance.IsPlayerTurn() && !TurnSystem.Instance.HasPlayerAttacked())
@@ -40,27 +60,6 @@ namespace JAM.Entities._Player
                 }
             }
 
-        }
-
-
-        protected override void Awake()
-        {
-            base.Awake();
-            
-            _instance = this;
-            
-            _inputActions = new PlayerInputs();
-            _inputActions.Enable();
-            _inputActions.Player.Move.started += ctx => CheckIfCanMove(ctx.ReadValue<Vector2>());
-            
-            TurnSystem.Instance.onTurnStart += GetMovementValues;
-            
-            GetMovementValues();
-        }
-
-        private void Start()
-        {
-            SetStartPosition();
         }
 
         private void SetStartPosition()

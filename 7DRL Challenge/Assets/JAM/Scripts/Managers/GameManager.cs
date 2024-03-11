@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using JAM.Entities.Enemy;
 using JAM.Entities._Player;
@@ -30,6 +31,13 @@ namespace JAM.Manager.Game
 
         private void MapRecalculated()
         {
+            StartCoroutine(nameof(SpawnEnemies));
+        }
+
+        private IEnumerator SpawnEnemies()
+        {
+            yield return new WaitUntil(() => Player.Instance != null);
+            
             _totalEnemies = Random.Range(_minEnemies, _maxEnemies - 1);
             var playerPos = Player.Instance.CurrentPositionInTile;
             for (var i = 0; i < _totalEnemies; i++)

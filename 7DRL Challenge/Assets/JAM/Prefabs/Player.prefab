@@ -57,7 +57,7 @@ MonoBehaviour:
   _deathSFX: Death_Goose
   _chasing: 0
   _currentPosition: {x: 0, y: 0, z: 0}
-  _spellShooter: {fileID: 0}
+  _spellShooter: {fileID: 4641172103472547359}
 --- !u!114 &2359892457090031364
 MonoBehaviour:
   m_ObjectHideFlags: 0

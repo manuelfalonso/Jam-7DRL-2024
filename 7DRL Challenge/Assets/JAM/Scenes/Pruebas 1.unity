@@ -749,16 +749,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 922355967672813594, guid: fbf7e20592c482a4283aa6a089796157,
-        type: 3}
-      propertyPath: _maxTileSize
-      value: 11
-      objectReference: {fileID: 0}
-    - target: {fileID: 922355967672813594, guid: fbf7e20592c482a4283aa6a089796157,
-        type: 3}
-      propertyPath: _minTileSize
-      value: 11
-      objectReference: {fileID: 0}
     - target: {fileID: 1970612367655644258, guid: fbf7e20592c482a4283aa6a089796157,
         type: 3}
       propertyPath: m_Size.x

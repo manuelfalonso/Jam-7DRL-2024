@@ -158,8 +158,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 796c6505c55cd874089ab480dc18dc34, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _minTileSize: 10
-  _maxTileSize: 15
+  _minTileSize: 11
+  _maxTileSize: 11
   _tileMap: {fileID: 1970612367655644258}
   _tiles:
   - {fileID: 11400000, guid: 2709498027f8ef14a9e499a184333fbb, type: 2}

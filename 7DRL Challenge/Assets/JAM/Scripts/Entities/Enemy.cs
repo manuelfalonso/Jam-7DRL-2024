@@ -57,6 +57,7 @@ namespace JAM.Entities.Enemy
                 _distanceToPlayer = 1;
             }
             
+            Debug.Log(gameObject.activeInHierarchy);
             StartCoroutine(MovingTowardsPosition(path));
         }
 
