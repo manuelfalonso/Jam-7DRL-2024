@@ -4,6 +4,7 @@ using JAM.Spells;
 using JAM.TileMap;
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 namespace JAM
 {
@@ -87,6 +88,11 @@ namespace JAM
         {
             var centerOfDamage = _goTo;
 
+            var enemies = new List<Enemy>();
+            var data = new DamageData
+            {
+                Amount = _spellStats.Damage
+            };
             for (var xOffset = -1; xOffset <= 1; xOffset++)
             {
                 for (var yOffset = -1; yOffset <= 1; yOffset++)
@@ -96,13 +102,13 @@ namespace JAM
                     {
                         if (enemy.MyPosition == neighborPosition)
                         {
-                            DamageData data = new DamageData();
-                            data.Amount = _spellStats.Damage;
-                            enemy.TryTakeDamage(data);
+                            enemies.Add(enemy);
                         }
                     }
                 }
             }
+            enemies.ForEach(x => x.TryTakeDamage(data));
+            
             transform.localScale = new Vector3(1.5f, 1.5f, 1.5f);
             StartCoroutine(WaitUntil());
         }

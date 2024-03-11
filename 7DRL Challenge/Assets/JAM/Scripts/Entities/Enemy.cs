@@ -104,8 +104,8 @@ namespace JAM.Entities.Enemy
         {
             base.DeathOfEntity(toCall);
             TurnSystem.Instance.RemoveEnemyFromList(this);
+            Destroy(gameObject);
             WinLoseCondition.Instance.onWin?.Invoke();
-            gameObject.SetActive(false);
         }
         
         private void GetMovementValues()
