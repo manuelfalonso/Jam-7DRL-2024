@@ -14,8 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _spellName: Fireball
   _attackSpell: 0
+  _enemyAttack: 0
   _tilesLength: 20
   _damage: 1
   _pierce: 0
   _AOE: 1
   _cross: 0
+  _directionOfAttack: 0

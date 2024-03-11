@@ -3,6 +3,7 @@ using JAM.Entities._Player;
 using JAM.Spells;
 using JAM.TileMap;
 using UnityEngine;
+using System.Collections;
 
 namespace JAM
 {
@@ -48,7 +49,7 @@ namespace JAM
         {
             if (_spellStats.AOE)
             {
-                worldHit = TileMapManager.Instance.Tilemap.CellToWorld(_goTo);
+                worldHit = TileMapManager.Instance.Tilemap.GetCellCenterLocal(_goTo);
                 transform.position = Vector3.MoveTowards(transform.position, worldHit, _speed * Time.deltaTime);
                 //Debug.Log($"MyPosIs:{transform.position}, and the pos i have to go : {_goTo}");
                 if (transform.position == worldHit)
@@ -56,17 +57,20 @@ namespace JAM
                     AttackDamageAOESpell();
                 }
             }
-            if (_spellStats.Pierce)
+            else if (_spellStats.Pierce)
             {
+                worldHit = TileMapManager.Instance.Tilemap.GetCellCenterLocal(_goTo);
                 var actualPos = TileMapManager.Instance.Tilemap.WorldToCell(transform.position);
-                transform.position = Vector3.MoveTowards(transform.position, _goTo, _speed * Time.deltaTime);
-                
-
-                if(TileMapManager.Instance.IsObstacle(actualPos))
+                transform.position = Vector3.MoveTowards(transform.position, worldHit, _speed * Time.deltaTime);
+                if (TileMapManager.Instance.IsObstacle(actualPos))
                 {
                     Destroy(gameObject);
                 }
-                AttackDamagePierceSpell();
+                if (transform.position == worldHit)
+                {
+                    Destroy(gameObject);
+                }
+                    AttackDamagePierceSpell();
             }
             else
             {
@@ -99,25 +103,32 @@ namespace JAM
                     }
                 }
             }
-            Destroy(gameObject);
+            transform.localScale = new Vector3(1.5f, 1.5f, 1.5f);
+            StartCoroutine(WaitUntil());
         }
 
+        IEnumerator WaitUntil()
+        {
+            yield return new WaitForSeconds(1);
+            Destroy(gameObject);
+        }
         private void AttackDamagePierceSpell()
         {
+            var actualPos = TileMapManager.Instance.Tilemap.WorldToCell(transform.position);
             if (_spellStats.EnemyAttack)
             {
-                if (Player.Instance.CurrentPositionInTile == _goTo)
+                if (Player.Instance.CurrentPositionInTile == actualPos)
                 {
                     DamageData data = new DamageData();
                     data.Amount = _spellStats.Damage;
                     Player.Instance.TryTakeDamage(data);
                 }
             }
-            if (_spellStats.EnemyAttack)
+            if (!_spellStats.EnemyAttack)
             {
                 foreach (Enemy enemy in TurnSystem.Instance.enemies)
                 {
-                    if (enemy.MyPosition == _goTo)
+                    if (enemy.MyPosition == actualPos)
                     {
                         DamageData data = new DamageData();
                         data.Amount = _spellStats.Damage;

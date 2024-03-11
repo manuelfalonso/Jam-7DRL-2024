@@ -70,7 +70,9 @@ namespace JAM.Entities._Player
                 _currentPosition.x++;
             }
 
-            transform.position = TileMapManager.Instance.GetCellCenter(_currentPosition);
+            var pos = TileMapManager.Instance.GetCellCenter(_currentPosition);
+            pos.z = -2;
+            transform.position = pos; 
         }
 
         private void GetMovementValues()
