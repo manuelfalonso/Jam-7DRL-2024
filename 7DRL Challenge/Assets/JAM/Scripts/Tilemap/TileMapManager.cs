@@ -62,24 +62,7 @@ namespace JAM.TileMap
             GetNewTileSize();
             GenerateRandomTileMap();
         }
-
-        #region TEMPORAL
-        private void Update()
-        {
-            
-            if (Input.GetMouseButtonDown(0))
-            {
-                var hit = Physics2D.GetRayIntersection(Camera.main.ScreenPointToRay(Input.mousePosition));
-                if (hit.collider != null)
-                {
-                    var tilePosition = _tileMap.WorldToCell(hit.point);
-                    if (!IsInsideBounds(tilePosition)) { return; }
-                    
-                    //IsObstacle(tilePosition);
-                }
-            }
-        }
-        #endregion
+        
         #endregion
         
         #region Public Methods
